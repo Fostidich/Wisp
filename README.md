@@ -1,2 +1,2 @@
-# Whisp
-Don't store your password anywere, use this instead
+# Wisp
+Don't store your password anywhere, use this instead
