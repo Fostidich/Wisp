@@ -3,7 +3,7 @@ CFLAGS = -std=c++11 -Wall -I./include
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
-TARGET = $(BIN_DIR)/whisp
+TARGET = $(BIN_DIR)/wisp
 SRCS = $(shell find $(SRC_DIR) -type f -name '*.cpp')
 OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
