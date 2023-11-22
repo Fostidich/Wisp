@@ -1,0 +1,39 @@
+USAGE:
+
+    wisp - General actions:
+        -h, --help                  Show help for the command
+            -h, --hash                  Show hash mask details
+            -e, --example               Show usage examples
+        -v, --version               Print version information
+        -d, --destroy               Immediately destroy all saved information
+        -r, --random                Print a random key
+
+    wisp get - Generate hash:
+        -p, --provider <provider*>      Generate hash with the specified provider
+        -u, --username <username*>      Generate hash with the specified username
+        -h, --hash <hash mask>          Use a custom hash mask for generation
+        -n, --update <update number>    Use a custom update number for generation
+        -c, --clipboard                 Save the hash to clipboard without printing it
+
+    wisp set - Save provider-username info:
+        -p, --provider <provider*>      Set hash or token for the pair with this provider
+        -u, --username <username*>      Set hash or token for the pair with this username
+        -h, --hash <hash mask>          Set hash mask for the selected pair
+        -n, --update <update number>    Set update number for the selected pair
+        -a, --annotation <"note">               Set a note for the selected pair
+
+    wisp glob - Global actions for non-custom generations:
+        -h, --hash <hash mask>          Use this hash mask for pairs without a custom one
+        -t, --token                     Private token actions:
+            -n, --new <private token>       Set a new private token
+            -g, --generate                  A new private token is generated
+            -s, --show                      The current private token is showed
+
+    wisp list - Access stored data:
+        -s, --show                      Print all provider-username pairs saved with info
+        -a, --add                       Adds a pair to the list:
+            -p, --provider <provider*>      Specify the provider
+            -u, --username <username*>      Specify the username
+        -r, --remove                    Removes a pair from the list:
+            -p, --provider <provider*>      Specify the provider
+            -u, --username <username*>      Specify the username
