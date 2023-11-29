@@ -1,6 +1,6 @@
 # Wisp
-Don't store your password, generate them with this!
-### [Usage](assets/help.txt)
+Don't store passwords anywhere, generate them with this!
+### [Usage](assets/helpText/help.txt)
 ###### Code made by Francesco Ostidich
 
 

@@ -4,15 +4,19 @@
 
 #ifndef GENERAL_H
 #define GENERAL_H
+
 #include <string>
 
 
 class General {
 public:
-    General(int argc, char* argv[]);
+    void execute();
+
+
 private:
-    void printHelp();
-    void printVersion();
+    static void printHelp();
+
+    static void printVersion();
 };
 
 

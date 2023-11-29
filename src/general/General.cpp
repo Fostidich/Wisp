@@ -2,17 +2,32 @@
 // Created by kello on 22/11/23.
 //
 
-#include "../../include/general/General.h"
-
+#include "general/General.h"
+#include "Main.h"
 #include <iostream>
+#include <fstream>
 
-General::General(int argc, char* argv[]) {
-    if (argc == 1) {
-        std::cout << "Error: no command provided, try \"wisp --help\"" << std::endl;
-        exit(1);
-    }
-    switch (argv) {
-        case "-v" || "--version": printVersion();
-    }
+using namespace std;
+
+void General::execute() {
+    printHelp();
+    printVersion();
 }
 
+void General::printHelp() {
+    ifstream file("assets/helpText/help.txt");
+    string line;
+    if (!file.is_open()) {
+        cout << "Error: unable to retrieve help data" << endl;
+        return;
+    }
+    while (getline(file, line)) {
+        cout << line << '\n';
+    }
+    cout << endl;
+    file.close();
+}
+
+void General::printVersion() {
+    cout << "VERSION:\n\n\tCurrently running version: " << wisp_program_version << endl;
+}
