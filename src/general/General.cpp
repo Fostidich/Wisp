@@ -9,9 +9,17 @@
 
 using namespace std;
 
-void General::execute() {
-    printHelp();
-    printVersion();
+void General::execute(string flag) {
+    switch (flag[2]) {
+        case 'h':
+            printHelp();
+            break;
+        case 'v':
+            printVersion();
+            break;
+        default:
+            cout << "Unrecognised flag" << endl;
+    }
 }
 
 void General::printHelp() {
@@ -29,5 +37,5 @@ void General::printHelp() {
 }
 
 void General::printVersion() {
-    cout << "VERSION:\n\n\tCurrently running version: " << wisp_program_version << endl;
+    cout << "VERSION:\n\n\tCurrently running version: " << wisp_program_version << "\n" << endl;
 }

@@ -5,29 +5,27 @@ SRC_DIR = src
 INCLUDE_DIR = include
 OBJ_DIR = obj
 TARGET_DIR = target
-LIB_DIR = lib
-BIN_DIR = bin
 
 SRCS = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
 INCLUDES = $(addprefix -I./,$(shell find $(INCLUDE_DIR) -type d))
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.cpp=.o)))
 TARGET = -o $(TARGET_DIR)/wisp
-LIBS = -L$(LIB_DIR)
+LIBS = -lssl -lcrypto
 
 all:
 	@echo -n "Making:\t"
-	@echo -n "cleaning outputs"
+	@echo -n "cleaning outputs -> "
 	@make clean >/dev/null
-	@echo -n " -> generating objects"
+	@echo -n "generating objects -> "
 	@make objects >/dev/null
-	@echo -n " -> building target"
-	@$(CC) $(CFLAGS) $(TARGET) $(INCLUDES) $(LIBS) $(OBJS)
-	@echo " -> finish!"
+	@echo -n "building target -> "
+	@$(CC) $(CFLAGS) $(TARGET) $(INCLUDES) $(OBJS) $(LIBS)
+	@echo "finish!"
 
 objects:
 	@for source_file in $(SRCS); do \
 			object_file="$(OBJ_DIR)/$$(basename $$source_file .cpp).o"; \
-    	  	$(CC) $(CFLAGS) $(INCLUDES) $(LIBS) -c -o $$object_file $$source_file; \
+    	  	$(CC) $(CFLAGS) $(INCLUDES) -c -o $$object_file $$source_file $(LIBS); \
     	done
 
 clean:

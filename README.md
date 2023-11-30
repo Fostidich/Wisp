@@ -8,3 +8,4 @@ Don't store passwords anywhere, generate them with this!
 
 ## To do
 - [ ] manage entry points
+- [x] get sha256 function

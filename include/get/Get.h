@@ -7,8 +7,7 @@
 
 
 class Get {
-public:
-    Get();
+
 };
 
 

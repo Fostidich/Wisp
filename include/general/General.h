@@ -10,7 +10,7 @@
 
 class General {
 public:
-    void execute();
+    static void execute(std::string flag);
 
 
 private:
