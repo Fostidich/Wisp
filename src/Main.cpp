@@ -5,6 +5,8 @@
 #include <iostream>
 #include <openssl/sha.h>
 #include <cstring>
+#include <sstream>
+#include <iomanip>
 #include "general/General.h"
 
 using namespace std;
@@ -14,11 +16,18 @@ int main(const int argc, char *argv[]) {
         General::execute(argv[1]);
         return 0;
     }
-    unsigned char text[] = "Kello";
+    cout << "Enter word: ";
+    string input;
+    getline(cin, input);
+    const auto* text = reinterpret_cast<const unsigned char*>(input.c_str());
     unsigned int len = strlen ((const char*) text);
     unsigned char hash [SHA256_DIGEST_LENGTH];
     SHA256(text, len, hash);
-    for (unsigned char ch: hash)
-        cout << (short)ch << "\n";
+    stringstream ss;
+    ss << hex << setfill('0');
+    for (const auto& byte : hash) {
+        ss << setw(2) << static_cast<unsigned int>(byte);
+    }
+    cout << ss.str() << endl;
     return 0;
 }
