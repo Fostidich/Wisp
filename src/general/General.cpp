@@ -6,6 +6,7 @@
 #include "Main.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -37,5 +38,5 @@ void General::printHelp() {
 }
 
 void General::printVersion() {
-    cout << "VERSION:\n\n\tCurrently running version: " << wisp_program_version << "\n" << endl;
+    cout << "VERSION:\n\n\tCurrently running version: " << WISP_PROGRAM_VERSION << "\n" << endl;
 }

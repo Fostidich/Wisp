@@ -5,8 +5,8 @@
 #ifndef GENERAL_H
 #define GENERAL_H
 
-#include <string>
 
+#include <string>
 
 class General {
 public:
