@@ -2,17 +2,18 @@
 // Created by kello on 22/11/23.
 //
 
-#include "gen/gen.h"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "commands/gen/gen.h"
+#include "utils/flags.h"
 
 using namespace std;
 
 const std::string WISP_PROGRAM_VERSION = "wisp-0.1.0";
 
-gen::gen(int argc, const char **argv) {
-    flags = genFlags::parse_settings(argc, argv);
+gen::gen(const int argc, const char **argv) {
+    flags = parse_settings<genFlags>(argc, argv);
     if (flags.help) printHelp();
     else if (flags.version) printVersion();
 }
@@ -38,20 +39,3 @@ void gen::printVersion() {
     cout << "VERSION:\n\n\tCurrently running version: " << WISP_PROGRAM_VERSION << "\n" << endl;
 }
 
-using namespace genFlags;
-Flags genFlags::parse_settings(const int argc, const char **argv) {
-    Flags settings;
-    for (int i = 1 /* use 2 if a command is provided */; i < argc; i++) {
-        string opt{argv[i]};
-        if (auto j{NoArgs.find(opt)}; j != NoArgs.end())
-            j->second(settings);
-        else if (auto k{OneArgs.find(opt)}; k != OneArgs.end())
-            if (++i < argc || argv[1][0] != '-')
-                k->second(settings, {argv[i]});
-            else
-                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
-        else
-            cerr << "ERROR: unrecognized command-line option " << opt << endl;
-    }
-    return settings;
-}

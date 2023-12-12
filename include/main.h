@@ -10,4 +10,5 @@ int main(int argc, const char **argv);
 
 void assignFlags(int argc, const char **argv);
 
-#endif
+
+#endif //MAIN_H

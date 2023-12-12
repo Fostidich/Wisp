@@ -13,14 +13,13 @@ LIBS = -lssl -lcrypto
 
 .PHONY: all
 all:
-	@echo -n "Making:\t"
-	@echo -n "cleaning outputs -> "
+	@echo "[---] Cleaning outputs"
 	@make clean >/dev/null
-	@echo -n "generating objects -> "
+	@echo "[#--] Generating objects"
 	@make objects >/dev/null
-	@echo -n "building target -> "
+	@echo "[##-] Building target"
 	@$(CC) $(TARGET) $(INCLUDES) $(OBJS) $(LIBS)
-	@echo "finish!"
+	@echo "[###] Finish"
 
 .PHONY: objects
 objects:

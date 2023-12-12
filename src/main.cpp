@@ -2,9 +2,9 @@
 // Created by kello on 22/11/23.
 //
 
-#include <iostream>
 #include "main.h"
-#include "gen/gen.h"
+#include "commands/gen/gen.h"
+#include <iostream>
 
 int main(int argc, const char **argv) {
     assignFlags(argc, argv);
