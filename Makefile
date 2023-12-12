@@ -24,7 +24,10 @@ all:
 
 .PHONY: objects
 objects:
-	@for source_file in $(SRCS); do object_file="$(OBJ_DIR)/$$(basename $$source_file .cpp).o"; $(CC) $(INCLUDES) -c -o $$object_file $$source_file $(LIBS); done
+	@for source_file in $(SRCS); \
+ 	do object_file="$(OBJ_DIR)/$$(basename $$source_file .cpp).o"; \
+ 	$(CC) $(INCLUDES) -c -o $$object_file $$source_file $(LIBS); \
+	done
 
 .PHONY: clean
 clean:
