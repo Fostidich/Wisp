@@ -33,3 +33,4 @@ clean:
 	@rm -rf $(OBJ_DIR) $(TARGET_DIR)
 	@mkdir -p ./$(OBJ_DIR)
 	@mkdir -p ./$(TARGET_DIR)
+	@ln -s ../assets target

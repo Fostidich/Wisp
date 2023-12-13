@@ -7,7 +7,6 @@
 #include "utils/flags.h"
 
 //FIXME: find a way to reuse same code
-//FIXME: beautify error management
 
 genFlags::Flags genFlags::parse_settings(int argc, char **argv) {
     Flags settings;
@@ -19,7 +18,7 @@ genFlags::Flags genFlags::parse_settings(int argc, char **argv) {
             if (++i < argc)
                 k->second(settings, {argv[i]});
             else
-                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+                std::cerr << "ERROR: missing parameter after flag " << opt << std::endl;
         else
             std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
     }
@@ -36,7 +35,7 @@ getFlags::Flags getFlags::parse_settings(int argc, char **argv) {
             if (++i < argc)
                 k->second(settings, {argv[i]});
             else
-                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+                std::cerr << "ERROR: missing parameter after flag " << opt << std::endl;
         else
             std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
     }
@@ -53,7 +52,7 @@ setFlags::Flags setFlags::parse_settings(int argc, char **argv) {
             if (++i < argc)
                 k->second(settings, {argv[i]});
             else
-                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+                std::cerr << "ERROR: missing parameter after flag " << opt << std::endl;
         else
             std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
     }
@@ -70,7 +69,7 @@ globFlags::Flags globFlags::parse_settings(int argc, char **argv) {
             if (++i < argc)
                 k->second(settings, {argv[i]});
             else
-                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+                std::cerr << "ERROR: missing parameter after flag " << opt << std::endl;
         else
             std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
     }
@@ -87,7 +86,7 @@ listFlags::Flags listFlags::parse_settings(int argc, char **argv) {
             if (++i < argc)
                 k->second(settings, {argv[i]});
             else
-                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+                std::cerr << "ERROR: missing parameter after flag " << opt << std::endl;
         else
             std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
     }
