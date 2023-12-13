@@ -13,9 +13,7 @@ include_directories(include)
 find_package(OpenSSL REQUIRED)
 include_directories(${OPENSSL_INCLUDE_DIR})
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS}
-        src/utils/flags.cpp
-        include/utils/flags.h)
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../target

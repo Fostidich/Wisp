@@ -5,15 +5,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "commands/gen/gen.h"
 #include "utils/flags.h"
+#include "commands/gen/gen.h"
 
 using namespace std;
 
 const std::string WISP_PROGRAM_VERSION = "wisp-0.1.0";
 
-gen::gen(const int argc, const char **argv) {
-    flags = parse_settings<genFlags>(argc, argv);
+gen::gen(int argc, char **argv) {
+    flags = genFlags::parse_settings(argc, argv);
     if (flags.help) printHelp();
     else if (flags.version) printVersion();
 }

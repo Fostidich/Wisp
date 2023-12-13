@@ -25,7 +25,7 @@ USAGE:
     wisp glob - Global actions for non-custom generations:
         -h, --hash <hash mask>          Use this hash mask for pairs without a custom one
         -t, --token                     Private token actions:
-            -n, --new <private token>   Set a new private token
+            -c, --change <token>        Set a new private token
             -g, --generate              A new private token is generated
             -s, --show                  The current private token is showed
 

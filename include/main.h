@@ -6,9 +6,9 @@
 #define MAIN_H
 
 
-int main(int argc, const char **argv);
+int main(int argc, char **argv);
 
-void assignFlags(int argc, const char **argv);
+void assignFlags(int argc, char **argv);
 
 
 #endif //MAIN_H

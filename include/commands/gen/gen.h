@@ -15,7 +15,7 @@ extern const std::string WISP_PROGRAM_VERSION;
 
 class gen {
 public:
-    gen(int argc, const char **argv);
+    gen(int argc, char **argv);
 
 private:
     genFlags::Flags flags;

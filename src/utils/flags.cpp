@@ -4,18 +4,19 @@
 
 #include <stdexcept>
 #include <iostream>
+#include "utils/flags.h"
 
-template <class cmd>
-typename cmd::Flags parse_settings(const int argc, const char **argv) {
-    typename cmd::Flags settings;
-    const auto& noArgs = cmd::NoArgs;
-    const auto& oneArgs = cmd::OneArgs;
-    for (int i = 1; i < argc; i++) {
+//FIXME: find a way to reuse same code
+//FIXME: beautify error management
+
+genFlags::Flags genFlags::parse_settings(int argc, char **argv) {
+    Flags settings;
+    for (int i = 1 /* i=2 for one-word commands */; i < argc; i++) {
         std::string opt{argv[i]};
-        if (auto j{noArgs.find(opt)}; j != noArgs.end())
+        if (auto j{NoArgs.find(opt)}; j != NoArgs.end())
             j->second(settings);
-        else if (auto k{oneArgs.find(opt)}; k != oneArgs.end())
-            if (++i < argc || argv[1][0] != '-')
+        else if (auto k{OneArg.find(opt)}; k != OneArg.end())
+            if (++i < argc)
                 k->second(settings, {argv[i]});
             else
                 throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
@@ -25,3 +26,70 @@ typename cmd::Flags parse_settings(const int argc, const char **argv) {
     return settings;
 }
 
+getFlags::Flags getFlags::parse_settings(int argc, char **argv) {
+    Flags settings;
+    for (int i = 2; i < argc; i++) {
+        std::string opt{argv[i]};
+        if (auto j{NoArgs.find(opt)}; j != NoArgs.end())
+            j->second(settings);
+        else if (auto k{OneArg.find(opt)}; k != OneArg.end())
+            if (++i < argc)
+                k->second(settings, {argv[i]});
+            else
+                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+        else
+            std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
+    }
+    return settings;
+}
+
+setFlags::Flags setFlags::parse_settings(int argc, char **argv) {
+    Flags settings;
+    for (int i = 2; i < argc; i++) {
+        std::string opt{argv[i]};
+        if (auto j{NoArgs.find(opt)}; j != NoArgs.end())
+            j->second(settings);
+        else if (auto k{OneArg.find(opt)}; k != OneArg.end())
+            if (++i < argc)
+                k->second(settings, {argv[i]});
+            else
+                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+        else
+            std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
+    }
+    return settings;
+}
+
+globFlags::Flags globFlags::parse_settings(int argc, char **argv) {
+    Flags settings;
+    for (int i = 2; i < argc; i++) {
+        std::string opt{argv[i]};
+        if (auto j{NoArgs.find(opt)}; j != NoArgs.end())
+            j->second(settings);
+        else if (auto k{OneArg.find(opt)}; k != OneArg.end())
+            if (++i < argc)
+                k->second(settings, {argv[i]});
+            else
+                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+        else
+            std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
+    }
+    return settings;
+}
+
+listFlags::Flags listFlags::parse_settings(int argc, char **argv) {
+    Flags settings;
+    for (int i = 2; i < argc; i++) {
+        std::string opt{argv[i]};
+        if (auto j{NoArgs.find(opt)}; j != NoArgs.end())
+            j->second(settings);
+        else if (auto k{OneArg.find(opt)}; k != OneArg.end())
+            if (++i < argc)
+                k->second(settings, {argv[i]});
+            else
+                throw std::runtime_error{"ERROR: missing parameter after flag " + opt};
+        else
+            std::cerr << "ERROR: unrecognized command-line option " << opt << std::endl;
+    }
+    return settings;
+}

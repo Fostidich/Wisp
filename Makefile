@@ -5,7 +5,7 @@ INCLUDE_DIR = include
 OBJ_DIR = obj
 TARGET_DIR = target
 
-SRCS = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
+SRCS = $(shell find $(SRC_DIR) -type f)
 INCLUDES = $(addprefix -I./,$(shell find $(INCLUDE_DIR) -type d))
 OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(SRCS:.cpp=.o)))
 TARGET = -o $(TARGET_DIR)/wisp
