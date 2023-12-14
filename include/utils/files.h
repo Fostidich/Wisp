@@ -9,6 +9,7 @@
 #include <string>
 
 std::string getExecutablePath();
+
 std::string getExecutableDir();
 
 

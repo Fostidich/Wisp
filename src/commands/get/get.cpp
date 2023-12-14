@@ -16,7 +16,7 @@ get::get(int argc, char **argv) {
     flags = getFlags::parse_settings(argc, argv);
     if (flags.provider.has_value() && flags.username.has_value()) getHash();
     else {
-        std::cout << "ERROR: provider or username are mandatory" << std::endl;
+        std::cout << "ERROR: provider and username are mandatory" << std::endl;
     }
 }
 

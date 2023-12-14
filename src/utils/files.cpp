@@ -7,14 +7,18 @@
 #ifdef _WIN32
 #include <windows.h>
 #elif __linux__
+
 #include <unistd.h>
 #include <climits>
+
 #endif
 
 std::string getExecutableDir() {
     std::string executablePath = getExecutablePath();
     size_t lastSlash = executablePath.find_last_of('/');
-    std::string executableDir = (lastSlash != std::string::npos) ? executablePath.substr(0, lastSlash + 1) : "";
+    std::string executableDir = (lastSlash != std::string::npos) ?
+                                executablePath.substr(0, lastSlash + 1) :
+                                "";
     return executableDir;
 }
 
