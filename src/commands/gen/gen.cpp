@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <random>
+#include <sstream>
 #include "utils/flags.h"
 #include "commands/gen/gen.h"
 #include "utils/files.h"
@@ -21,6 +23,7 @@ gen::gen(int argc, char **argv) {
 }
 
 void gen::printHelp() const {
+    // FIXME: help text files are to be generated somehow
     std::string executableDir = getExecutableDir();
     ifstream file;
     if (flags.mask) file.open(executableDir + "assets/help-text/helpMask.txt");
@@ -43,5 +46,43 @@ void gen::printVersion() {
 }
 
 void gen::printRandomKey() {
-    cout << "random key" << endl;
-};
+    stringstream ss;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++){
+            ss << randomChar();
+        }
+        ss << "-";
+    }
+    for (int j = 0; j < 4; j++){
+        ss << randomChar();
+    }
+    cout << ss.str() << endl;
+}
+
+void gen::destroyAllData() {
+    cout << "destroy all" << endl;
+}
+
+void gen::printList() {
+    cout << "full pairs list" << endl;
+}
+
+char gen::randomChar() {
+
+    /*
+     * 23 pound
+     * 45 hyphen
+     * 48-57 digits
+     * 65-90 uppercase letters
+     * 97-122 lowercase letters
+     */
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dis(0, 61);
+    int rand = dis(gen);
+
+    if (rand < 10) return char('0' + rand);
+    if (rand < 36) return char('A' + rand - 10);
+    else return char('a' + rand - 36);
+}

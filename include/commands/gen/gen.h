@@ -51,6 +51,16 @@ private:
      * Print a random key that can become the personal one to be used
      */
     static void printRandomKey();
+
+    static void destroyAllData();
+
+    static void printList();
+
+    /**
+     * Generate a random char between digits, uppercase and lowercase letters, hyphen and pound
+     * @return the random char
+     */
+    static char randomChar();
 };
 
 
