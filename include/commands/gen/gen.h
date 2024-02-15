@@ -23,6 +23,11 @@ private:
     void printHelp() const;
 
     static void printVersion();
+
+    /**
+     * Print a random key
+     */
+    void printRandomKey();
 };
 
 

@@ -19,8 +19,9 @@ namespace genFlags {
         bool mask{false};
         bool example{false};
         bool version{false};
-        bool destroy{false};
         bool random{false};
+        bool destroy{false};
+        bool list{false};
     };
 
     Flags parse_settings(int argc, char **argv);
@@ -37,10 +38,12 @@ namespace genFlags {
             S("-e", example, true),
             S("--version", version, true),
             S("-v", version, true),
-            S("--destroy", destroy, true),
-            S("-d", destroy, true),
             S("--random", random, true),
             S("-r", random, true),
+            S("--destroy", destroy, true),
+            S("-d", destroy, true),
+            S("--list", list, true),
+            S("-l", list, true),
     };
 
     const std::unordered_map<std::string, OneArgHandle> OneArg{
@@ -85,6 +88,7 @@ namespace setFlags {
         std::optional<std::string> hash;
         std::optional<std::string> update;
         std::optional<std::string> annotation;
+        bool remove{false};
     };
 
     typedef std::function<void(Flags &)> NoArgHandle;
@@ -93,6 +97,8 @@ namespace setFlags {
     Flags parse_settings(int argc, char **argv);
 
     const std::unordered_map<std::string, NoArgHandle> NoArgs{
+            S("--remove", remove, true),
+            S("-r", remove, true),
     };
 
     const std::unordered_map<std::string, OneArgHandle> OneArg{
@@ -137,37 +143,6 @@ namespace globFlags {
             R("-h", hash, arg),
             R("--change", change, arg),
             R("-c", change, arg),
-    };
-}
-
-namespace listFlags {
-    struct Flags {
-        bool show{false};
-        bool add{false};
-        bool remove{false};
-        std::optional<std::string> provider;
-        std::optional<std::string> username;
-    };
-
-    typedef std::function<void(Flags &)> NoArgHandle;
-    typedef std::function<void(Flags &, const std::string &)> OneArgHandle;
-
-    Flags parse_settings(int argc, char **argv);
-
-    const std::unordered_map<std::string, NoArgHandle> NoArgs{
-            S("--show", show, true),
-            S("-s", show, true),
-            S("--add", add, true),
-            S("-a", add, true),
-            S("--remove", remove, true),
-            S("-r", remove, true),
-    };
-
-    const std::unordered_map<std::string, OneArgHandle> OneArg{
-            R("--provider", provider, arg),
-            R("-p", provider, arg),
-            R("--username", username, arg),
-            R("-u", username, arg),
     };
 }
 

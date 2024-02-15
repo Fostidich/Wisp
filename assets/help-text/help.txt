@@ -5,8 +5,9 @@ USAGE:
             -m, --mask                  Show hash mask details
             -e, --example               Show usage examples
         -v, --version                   Print version information
-        -d, --destroy                   Immediately destroy all saved information
         -r, --random                    Print a random key
+        -d, --destroy                   Immediately destroy all saved information
+        -l, --list                      Access stored data
 
     wisp get - Generate hash:
         -p, --provider <provider*>      Generate hash with the specified provider
@@ -21,6 +22,7 @@ USAGE:
         -h, --hash <hash mask>          Set hash mask for the selected pair
         -n, --update <update number>    Set update number for the selected pair
         -a, --annotation <"note">       Set a note for the selected pair
+        -r, --remove                    Removes a pair from the list
 
     wisp glob - Global actions for non-custom generations:
         -h, --hash <hash mask>          Use this hash mask for pairs without a custom one
@@ -28,12 +30,3 @@ USAGE:
             -c, --change <token>        Set a new private token
             -g, --generate              A new private token is generated
             -s, --show                  The current private token is showed
-
-    wisp list - Access stored data:
-        -s, --show                      Print all provider-username pairs saved with info
-        -a, --add                       Adds a pair to the list:
-            -p, --provider <provider*>  Specify the provider
-            -u, --username <username*>  Specify the username
-        -r, --remove                    Removes a pair from the list:
-            -p, --provider <provider*>  Specify the provider
-            -u, --username <username*>  Specify the username

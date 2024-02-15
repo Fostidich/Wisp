@@ -6,11 +6,8 @@ EXAMPLE:
     wisp get -p website.com -u you@mail.com
     wisp get -p website.com -u you@mail.com -h ab.bc.cd -u 2
 
-    wisp set -p website.com -u you@mail.com -n "love this app"
+    wisp set -p website.com -u you@mail.com -a "love this app"
     wisp set -p website.com -u you@mail.com -h ab.bc.cd -u 2
 
     wisp glob -h ab.ab.ab.ab.-.c.c.c.c
     wisp glob --token -g
-
-    wisp list -s
-    wisp list --add -p website.com -u you@mail.com

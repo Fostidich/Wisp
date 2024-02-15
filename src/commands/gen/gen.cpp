@@ -17,12 +17,12 @@ gen::gen(int argc, char **argv) {
     flags = genFlags::parse_settings(argc, argv);
     if (flags.help) printHelp();
     else if (flags.version) printVersion();
+    else if (flags.random) printRandomKey();
 }
 
 void gen::printHelp() const {
     std::string executableDir = getExecutableDir();
     ifstream file;
-    cout << executableDir << endl;
     if (flags.mask) file.open(executableDir + "assets/help-text/helpMask.txt");
     else if (flags.example) file.open(executableDir + "assets/help-text/helpExample.txt");
     else file.open(executableDir + "assets/help-text/help.txt");
@@ -41,3 +41,7 @@ void gen::printHelp() const {
 void gen::printVersion() {
     cout << "VERSION:\n\n\tCurrently running version: " << WISP_PROGRAM_VERSION << "\n" << endl;
 }
+
+void gen::printRandomKey() {
+
+};

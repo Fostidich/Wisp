@@ -32,4 +32,5 @@ void get::getHash() {
         ss << setw(2) << static_cast<unsigned int>(byte);
     }
     cout << ss.str() << endl;
+    cout << hash << endl;
 }
