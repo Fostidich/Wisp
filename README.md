@@ -1,8 +1,9 @@
 # Wisp
 Don't store passwords anywhere, generate them with this!
-### [Usage](assets/help-text/help.txt)
-###### Code made by Francesco Ostidich
 
+Click [here](assets/help-text/help.txt) for command list
+
+###### Code made by Francesco Ostidich
 
 - - -
 

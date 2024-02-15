@@ -43,5 +43,5 @@ void gen::printVersion() {
 }
 
 void gen::printRandomKey() {
-
+    cout << "random key" << endl;
 };

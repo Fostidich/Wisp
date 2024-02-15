@@ -15,7 +15,11 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS}
         src/utils/files.cpp
-        include/utils/files.h)
+        include/utils/files.h
+        src/commands/glob/glob.cpp
+        include/commands/glob/glob.h
+        src/commands/set/set.cpp
+        include/commands/set/set.h)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../target

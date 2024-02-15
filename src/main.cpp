@@ -5,6 +5,8 @@
 #include "main.h"
 #include "commands/gen/gen.h"
 #include "commands/get/get.h"
+#include "commands/set/set.h"
+#include "commands/glob/glob.h"
 #include <iostream>
 #include <cstring>
 
@@ -20,7 +22,11 @@ void assignFlags(int argc, char **argv) {
         gen(argc, argv);
     } else if (strcmp(argv[1], "get") == 0) {
         get(argc, argv);
+    } else if (strcmp(argv[1], "set") == 0) {
+        set(argc, argv);
+    } else if (strcmp(argv[1], "glob") == 0) {
+        glob(argc, argv);
     } else {
-        //TODO: switch commands
+        std::cout << "ERROR: unknown command, try with \"wisp --help\"" << std::endl;
     }
 }
