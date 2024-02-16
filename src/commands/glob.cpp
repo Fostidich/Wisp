@@ -2,7 +2,7 @@
 // Created by kello on 15/02/24.
 //
 
-#include "commands/glob/glob.h"
+#include "commands/glob.h"
 #include <iostream>
 
 using namespace std;

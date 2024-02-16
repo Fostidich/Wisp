@@ -3,10 +3,10 @@
 //
 
 #include "main.h"
-#include "commands/gen/gen.h"
-#include "commands/get/get.h"
-#include "commands/set/set.h"
-#include "commands/glob/glob.h"
+#include "commands/gen.h"
+#include "commands/get.h"
+#include "commands/set.h"
+#include "commands/glob.h"
 #include <iostream>
 #include <cstring>
 
@@ -19,7 +19,7 @@ void assignFlags(int argc, char **argv) {
     if (argc < 2) {
         std::cout << "ERROR: no input provided, try with \"wisp --help\"" << std::endl;
     } else if (argv[1][0] == '-') {
-        gen(argc, argv);
+        free(new gen(argc, argv)); // FIXME: is it the same?
     } else if (strcmp(argv[1], "get") == 0) {
         get(argc, argv);
     } else if (strcmp(argv[1], "set") == 0) {

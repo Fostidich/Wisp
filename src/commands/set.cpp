@@ -2,7 +2,7 @@
 // Created by kello on 15/02/24.
 //
 
-#include "commands/set/set.h"
+#include "commands/set.h"
 #include <iostream>
 
 using namespace std;

@@ -8,8 +8,9 @@
 #include <random>
 #include <sstream>
 #include <filesystem>
+#include <nlohmann/json.cpp>
 #include "utils/flags.h"
-#include "commands/gen/gen.h"
+#include "commands/gen.h"
 #include "utils/files.h"
 
 using namespace std;
@@ -85,13 +86,14 @@ void gen::destroyAllData() {
 }
 
 void gen::printList() {
-    string path = getExecutableDir() + "personal-data/pais.json";
+    string path = getExecutableDir() + "personal-data/pairs.json";
     ifstream file;
     file.open(path);
     if (!file.is_open()) {
-        // TODO: create json file and folder
+        cout << "No data to show" << endl;
+        return;
     }
-    // TODO: print json formatted
+    json
 }
 
 char gen::randomChar() {
