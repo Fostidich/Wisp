@@ -24,6 +24,7 @@ get::get(int argc, char **argv) {
     } else {
         cerr << "ERROR: provider and username are mandatory" << endl;
     }
+    delete hash;
 }
 
 void get::getHash(const string& input) {

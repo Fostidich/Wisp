@@ -8,7 +8,7 @@
 #include <random>
 #include <sstream>
 #include <filesystem>
-#include <nlohmann/json.cpp>
+#include <nlohmann/json.hpp>
 #include "utils/flags.h"
 #include "commands/gen.h"
 #include "utils/files.h"
@@ -93,11 +93,13 @@ void gen::printList() {
         cout << "No data to show" << endl;
         return;
     }
-    json
+    nlohmann::json jsonData;
+    file >> jsonData;
+    file.close();
+    cout << jsonData.dump(4) << endl;
 }
 
 char gen::randomChar() {
-
     /*
      * 23 pound
      * 45 hyphen
@@ -105,7 +107,6 @@ char gen::randomChar() {
      * 65-90 uppercase letters
      * 97-122 lowercase letters
      */
-
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> dis(0, 61);
