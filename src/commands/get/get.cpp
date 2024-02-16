@@ -22,7 +22,7 @@ get::get(int argc, char **argv) {
         printHash("hex");
         printHash("bit");
     } else {
-        std::cout << "ERROR: provider and username are mandatory" << std::endl;
+        cerr << "ERROR: provider and username are mandatory" << endl;
     }
 }
 

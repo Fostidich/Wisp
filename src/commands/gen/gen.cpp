@@ -7,6 +7,7 @@
 #include <string>
 #include <random>
 #include <sstream>
+#include <filesystem>
 #include "utils/flags.h"
 #include "commands/gen/gen.h"
 #include "utils/files.h"
@@ -20,20 +21,22 @@ gen::gen(int argc, char **argv) {
     if (flags.help) printHelp();
     else if (flags.version) printVersion();
     else if (flags.random) printRandomKey();
+    else if (flags.destroy) destroyAllData();
+    else if (flags.list) printList();
+    else cerr << "ERROR: no available option selected" << endl;
 }
 
 void gen::printHelp() const {
-    // FIXME: help text files are to be generated somehow
-    std::string executableDir = getExecutableDir();
+    string dir = getExecutableDir();
     ifstream file;
-    if (flags.mask) file.open(executableDir + "assets/help-text/helpMask.txt");
-    else if (flags.example) file.open(executableDir + "assets/help-text/helpExample.txt");
-    else file.open(executableDir + "assets/help-text/help.txt");
-    string line;
+    if (flags.mask) file.open(dir + "help-text/helpMask.txt");
+    else if (flags.example) file.open(dir + "help-text/helpExample.txt");
+    else file.open(dir + "help-text/help.txt");
     if (!file.is_open()) {
-        cout << "Error: unable to retrieve help data" << endl;
+        cerr << "ERROR: unable to retrieve help data" << endl;
         return;
     }
+    string line;
     while (getline(file, line)) {
         cout << line << '\n';
     }
@@ -60,11 +63,35 @@ void gen::printRandomKey() {
 }
 
 void gen::destroyAllData() {
-    cout << "destroy all" << endl;
+    cout << "Do you really want to delete all the personal data?\nWrite \"CONFIRM\" to proceed: ";
+    string confirm;
+    getline(cin, confirm);
+    if (confirm != "CONFIRM") {
+        cout << "Nothing was deleted" << endl;
+        return;
+    }
+
+    string path = getExecutableDir() + "personal-data";
+    try {
+        if (filesystem::exists(path)) {
+            filesystem::remove_all(path);
+            cout << "Personal data successfully deleted" << endl;
+        } else {
+            cerr << "ERROR: no data to delete" << endl;
+        }
+    } catch (const exception& ex) {
+        cerr << "ERROR: unable to delete personal data" << endl;
+    }
 }
 
 void gen::printList() {
-    cout << "full pairs list" << endl;
+    string path = getExecutableDir() + "personal-data/pais.json";
+    ifstream file;
+    file.open(path);
+    if (!file.is_open()) {
+        // TODO: create json file and folder
+    }
+    // TODO: print json formatted
 }
 
 char gen::randomChar() {

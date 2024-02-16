@@ -11,6 +11,7 @@
 #include <functional>
 #include "utils/flags.h"
 
+/// Program name and version
 extern const std::string WISP_PROGRAM_VERSION;
 
 class gen {

@@ -1,0 +1,18 @@
+[
+  {
+    "provider": "google",
+    "username": "kello"
+  },
+  {
+    "provider": "youtube",
+    "username": "kello",
+    "hash": "a.a.ab.b.b",
+    "update": 3,
+    "annotation": "without hyphen"
+  },
+  {
+    "provider": "apple",
+    "username": "kello",
+    "update": 2
+  }
+]
