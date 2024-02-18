@@ -8,26 +8,26 @@
 
 #include <string>
 
-class hash {
+class hashMask {
 public:
     /**
      * Class constructor.
-     * Hash is set to null-value (check its value with isNullValue())
+     * Hash is set to empty-value
      */
-    hash();
+    hashMask();
 
     /**
      * Class constructor.
      * Initial actions on the hash mask string are performed
      * @param hashMask is the string which defines the hash mask
      */
-    hash(std::string &hashMask);
+    explicit hashMask(std::string &hashString);
 
     /**
-     * If object is undefined, null-value is true
-     * @return null-value of the object
+     * If object is undefined, object is empty
+     * @return empty-value of the object
      */
-    bool isNullValue() const;
+    [[nodiscard]] bool empty() const;
 
     /**
      * Hash mask is returned in string form
@@ -39,12 +39,12 @@ private:
     /**
      * Value is true if object is undefined
      */
-    bool isNull;
+    bool isEmpty;
 
     /**
      * String form of the hash mask
      */
-    std::string hashMask;
+    std::string stringForm;
 };
 
 

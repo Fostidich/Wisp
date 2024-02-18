@@ -12,6 +12,7 @@
 #include "utils/flags.h"
 #include "commands/gen.h"
 #include "utils/files.h"
+#include "structures/entry.h"
 
 using namespace std;
 
@@ -96,8 +97,34 @@ void gen::printList() {
     nlohmann::json jsonData;
     file >> jsonData;
     file.close();
-    cout << jsonData.dump(4) << endl;
-    //TODO: print better
+
+    unsigned int maxLength = 0;
+    vector<entry> entries;
+    for (const auto& entryData : jsonData) {
+        string provider = entryData["provider"];
+        string username = entryData["username"];
+        entry newEntry = entry(provider, username);
+        if (entryData.contains("hash")) {
+            string hash = entryData["hash"];
+            newEntry.setMask(hashMask(hash));
+        }
+        if (entryData.contains("update")) {
+            int update = entryData["update"];
+            newEntry.setUpdate(update);
+        }
+        if (entryData.contains("annotation")) {
+            string annotation = entryData["annotation"];
+            newEntry.setAnnotation(annotation);
+        }
+        entries.push_back(newEntry);
+        unsigned int lineLength = provider.length() + username.length() + 3;
+        if (lineLength > maxLength)
+            maxLength = lineLength;
+    }
+    entry::setMaxLengthLine(maxLength);
+    for (auto e : entries) {
+        cout << e.toString() << endl;
+    }
 }
 
 char gen::randomChar() {

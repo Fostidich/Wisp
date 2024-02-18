@@ -7,7 +7,8 @@
 
 
 #include <string>
-#include "structures/hash.h"
+#include "structures/hashMask.h"
+#include "structures/date.h"
 
 class entry {
 public:
@@ -33,16 +34,16 @@ public:
     std::string getUsername();
 
     /**
-     * Getter for hash
-     * @return hash object
+     * Getter for mask
+     * @return hash mask object
      */
-    hash getHash();
+    hashMask getMask();
 
     /**
      * Getter for update
      * @return update integer
      */
-    unsigned int getUpdate() const;
+    [[nodiscard]] unsigned int getUpdate() const;
 
     /**
      * Getter for annotation
@@ -51,22 +52,34 @@ public:
     std::string getAnnotation();
 
     /**
-     * Setter for hash
-     * @param newHash hash object
+     * Getter for date
+     * @return last modified date
      */
-    void setHash(const hash& newHash);
+    date getLastModified();
+
+    /**
+     * Setter for mask
+     * @param newMask hash mask object
+     */
+    void setMask(const hashMask& newMask);
 
     /**
      * Setter for update
      * @param newUpdate update integer
      */
-    void setUpdate(int newUpdate);
+    void setUpdate(unsigned int newUpdate);
 
     /**
      * Setter for annotation
      * @param newAnnotation annotation string
      */
     void setAnnotation(std::string& newAnnotation);
+
+    /**
+     * Setter for max length line
+     * @param newMaxLengthLine max length line integer
+     */
+    static void setMaxLengthLine(unsigned int newMaxLengthLine);
 
     /**
      * Entry is returned in string form
@@ -87,9 +100,9 @@ private:
     std::string username;
 
     /**
-     * Hash object is always initialized but it can be null-value
+     * Custom hash mask for the entry
      */
-    hash hash;
+    hashMask mask;
 
     /**
      * Update number has 0 as default value, if it is not been set afterwards
@@ -101,7 +114,23 @@ private:
      */
     std::string annotation;
 
-    //TODO: date
+    /**
+     * Date of the last changes
+     */
+    date lastModified;
+
+    /**
+     * Constant length of the string made of provider and username
+     */
+    static unsigned int maxLengthLine;
+
+    /**
+     * Given a string, return a string containing as many spaces as to
+     * fill the constant length line. If input word is longer, one space
+     * will still be returned
+     * @return white spaces string
+     */
+    static std::string fillSpaces(const std::string& word);
 };
 
 

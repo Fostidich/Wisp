@@ -1,18 +1,32 @@
 [
   {
     "provider": "google",
-    "username": "kello"
+    "username": "kello",
+    "annotation": "love you"
   },
   {
-    "provider": "youtube",
-    "username": "kello",
+    "provider": "posteitaliane.it",
+    "username": "francesco.ostidich@mail.polimi.it",
     "hash": "a.a.ab.b.b",
-    "update": 3,
+    "update": 14,
     "annotation": "without hyphen"
   },
   {
     "provider": "apple",
-    "username": "kello",
+    "username": "francesco.ostidich@mail.polimi.it",
     "update": 2
+  },
+  {
+    "provider": "instagram",
+    "username": "kellogg's",
+    "update": 15,
+    "hash": "a.b.ab.ab.b.a",
+    "annotation": "jesus is with us"
+  },
+  {
+    "provider": "threads",
+    "username": "ken",
+    "update": 5,
+    "annotation": "jesus is with us"
   }
 ]
