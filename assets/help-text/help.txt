@@ -17,15 +17,15 @@ USAGE:
         -c, --clipboard                 Save the hash to clipboard without printing it
 
     wisp set - Add custom provider-username info:
-        -p, --provider <provider*>      Set hash or token for the pair with this provider
-        -u, --username <username*>      Set hash or token for the pair with this username
-        -h, --hash <hash mask>          Set hash mask for the selected pair
-        -n, --update <update number>    Set update number for the selected pair
-        -a, --annotation <"note">       Set a note for the selected pair
-        -r, --remove                    Removes a pair from the list
+        -p, --provider <provider*>      Set hash or token for the entry with this provider
+        -u, --username <username*>      Set hash or token for the entry with this username
+        -h, --hash <hash mask>          Set hash mask for the selected entry
+        -n, --update <update number>    Set update number for the selected entry
+        -a, --annotation <"note">       Set a note for the selected entry
+        -r, --remove                    Removes an entry from the list
 
     wisp glob - Global actions for non-custom generations:
-        -h, --hash <hash mask>          Use this hash mask for pairs without a custom one
+        -h, --hash <hash mask>          Use this hash mask for entries without a custom one
         -t, --token                     Private token actions:
             -c, --change <token>        Set a new private token
             -g, --generate              A new private token is generated

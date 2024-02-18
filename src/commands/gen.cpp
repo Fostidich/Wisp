@@ -86,7 +86,7 @@ void gen::destroyAllData() {
 }
 
 void gen::printList() {
-    string path = getExecutableDir() + "personal-data/pairs.json";
+    string path = getExecutableDir() + "personal-data/entries.json";
     ifstream file;
     file.open(path);
     if (!file.is_open()) {
@@ -97,6 +97,7 @@ void gen::printList() {
     file >> jsonData;
     file.close();
     cout << jsonData.dump(4) << endl;
+    //TODO: print better
 }
 
 char gen::randomChar() {

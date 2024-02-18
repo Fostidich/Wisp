@@ -37,7 +37,7 @@ private:
     /**
      * Run SHA256 on the input string and store the digest into the hash attribute
      */
-    void getHash(const std::string& input);
+    void getHash(const std::string &input);
 
     /**
      * Print the hash attribute

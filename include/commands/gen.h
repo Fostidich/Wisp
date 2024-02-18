@@ -53,8 +53,14 @@ private:
      */
     static void printRandomKey();
 
+    /**
+     * Delete the full "personal-data" folder
+     */
     static void destroyAllData();
 
+    /**
+     * The list of entries contained in the entries.json file is printed
+     */
     static void printList();
 
     /**
