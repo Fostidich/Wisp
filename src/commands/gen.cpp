@@ -5,13 +5,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <random>
 #include <sstream>
 #include <filesystem>
 #include <nlohmann/json.hpp>
 #include "utils/flags.h"
 #include "commands/gen.h"
 #include "utils/files.h"
+#include "utils/utils.h"
 #include "structures/entry.h"
 
 using namespace std;
@@ -47,25 +47,27 @@ void gen::printHelp() const {
 }
 
 void gen::printVersion() {
-    cout << "VERSION:\n\n\tCurrently running version: " << WISP_PROGRAM_VERSION << "\n" << endl;
+    cout << "VERSION:\n\n\tCurrently running version: " <<
+         WISP_PROGRAM_VERSION << "\n" << endl;
 }
 
 void gen::printRandomKey() {
     stringstream ss;
     for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++){
+        for (int j = 0; j < 4; j++) {
             ss << randomChar();
         }
         ss << "-";
     }
-    for (int j = 0; j < 4; j++){
+    for (int j = 0; j < 4; j++) {
         ss << randomChar();
     }
     cout << ss.str() << endl;
 }
 
 void gen::destroyAllData() {
-    cout << "Do you really want to delete all the personal data?\nWrite \"CONFIRM\" to proceed: ";
+    cout << "Do you really want to delete all the personal data?\n"
+            "Write \"CONFIRM\" to proceed: ";
     string confirm;
     getline(cin, confirm);
     if (confirm != "CONFIRM") {
@@ -81,7 +83,7 @@ void gen::destroyAllData() {
         } else {
             cerr << "ERROR: no data to delete" << endl;
         }
-    } catch (const exception& ex) {
+    } catch (const exception &ex) {
         cerr << "ERROR: unable to delete personal data" << endl;
     }
 }
@@ -100,7 +102,7 @@ void gen::printList() {
 
     unsigned int maxLength = 0;
     vector<entry> entries;
-    for (const auto& entryData : jsonData) {
+    for (const auto &entryData: jsonData) {
         string provider = entryData["provider"];
         string username = entryData["username"];
         entry newEntry = entry(provider, username);
@@ -122,25 +124,7 @@ void gen::printList() {
             maxLength = lineLength;
     }
     entry::setMaxLengthLine(maxLength);
-    for (auto e : entries) {
+    for (auto e: entries) {
         cout << e.toString() << endl;
     }
-}
-
-char gen::randomChar() {
-    /*
-     * 23 pound
-     * 45 hyphen
-     * 48-57 digits
-     * 65-90 uppercase letters
-     * 97-122 lowercase letters
-     */
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dis(0, 61);
-    int rand = dis(gen);
-
-    if (rand < 10) return char('0' + rand);
-    if (rand < 36) return char('A' + rand - 10);
-    else return char('a' + rand - 36);
 }

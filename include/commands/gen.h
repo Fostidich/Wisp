@@ -62,12 +62,6 @@ private:
      * The list of entries contained in the entries.json file is printed
      */
     static void printList();
-
-    /**
-     * Generate a random char between digits, uppercase and lowercase letters, hyphen and pound
-     * @return the random char
-     */
-    static char randomChar();
 };
 
 

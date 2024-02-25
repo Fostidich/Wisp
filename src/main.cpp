@@ -11,6 +11,7 @@
 #include <cstring>
 
 int main(int argc, char **argv) {
+    //FIXME: multi word options ("...") are not recognised
     assignFlags(argc, argv);
     return 0;
 }

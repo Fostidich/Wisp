@@ -8,6 +8,8 @@
 
 #include "utils/flags.h"
 
+extern const unsigned int TOKEN_LEN;
+
 class glob {
 public:
     /**
@@ -28,6 +30,16 @@ private:
      * - show\n
      */
     globFlags::Flags flags;
+
+    static void setHash(const std::string& newHash);
+
+    static void setToken(const std::string& newToken);
+
+    static void generateToken();
+
+    static void printToken();
+
+    static std::string getToken();
 };
 
 
