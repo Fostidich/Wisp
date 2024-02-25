@@ -12,7 +12,7 @@ class get {
 public:
     /**
      * Class constructor.
-     * Flags are put into flags struct. Hash array is initialized
+     * Flags are put into flags struct
      * @param argc main argc
      * @param argv main argv
      */

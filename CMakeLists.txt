@@ -5,11 +5,15 @@ project(wisp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "include/*.h")
+enable_language(C)
+
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.c" "lib/*.cpp" "lib/*.c")
+file(GLOB_RECURSE HEADERS "include/*.hpp" "include/*.h" "lib/*.hpp" "lib/*.h")
+
+include_directories(include lib)
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
-include_directories(include lib)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../target)
 

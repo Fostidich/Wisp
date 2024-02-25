@@ -13,7 +13,7 @@
 using namespace std;
 
 get::get(int argc, char **argv) {
-    hash = new unsigned char[SHA256_DIGEST_LENGTH]; //TODO: what about an hash class
+    hash = new unsigned char[SHA256_DIGEST_LENGTH];
 
     flags = getFlags::parse_settings(argc, argv);
     if (flags.provider.has_value() && flags.username.has_value()) {
