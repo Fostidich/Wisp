@@ -8,6 +8,7 @@
 
 #include "utils/flags.h"
 
+/// Length of the random generated token
 extern const unsigned int TOKEN_LEN;
 
 class glob {
@@ -31,14 +32,32 @@ private:
      */
     globFlags::Flags flags;
 
+    /**
+     * Update global hash value in config.ini
+     * @param newHash new hash to set
+     */
     static void setHash(const std::string& newHash);
 
+    /**
+     * Update global token value in config.ini
+     * @param newToken new token to set
+     */
     static void setToken(const std::string& newToken);
 
+    /**
+     * Generate a random token that can be set as the global one
+     */
     static void generateToken();
 
+    /**
+     * Print the global token value
+     */
     static void printToken();
 
+    /**
+     * Get the global token value
+     * @return global token string
+     */
     static std::string getToken();
 };
 

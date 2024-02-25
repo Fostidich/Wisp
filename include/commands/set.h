@@ -30,6 +30,19 @@ private:
      */
     setFlags::Flags flags;
 
+    /**
+     * Update or generate a new element with the provided attributes
+     * @param provider provider input string
+     * @param username username input string
+     */
+    void setEntry(const std::string& provider, const std::string& username);
+
+    /**
+     * Remove element with the provided attributes
+     * @param provider provider input string
+     * @param username username input string
+     */
+    static void deleteEntry(const std::string& provider, const std::string& username);
 };
 
 

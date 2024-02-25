@@ -7,7 +7,6 @@
 
 using namespace std;
 
-
 char randomChar() {
     /*
      * 23 pound
