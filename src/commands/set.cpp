@@ -4,6 +4,7 @@
 
 #include "commands/set.h"
 #include "utils/files.h"
+#include "structures/date.h"
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <fstream>
@@ -30,7 +31,6 @@ set::set(int argc, char **argv) {
             return;
         }
     }
-
     flags = setFlags::parse_settings(argc, argv);
     if (flags.provider.has_value() && flags.username.has_value()) {
         if (flags.remove)
@@ -54,10 +54,12 @@ void set::setEntry(const std::string &provider, const std::string &username) {
     inFile >> jsonData;
     inFile.close();
 
+    date newDate;
     bool found = false;
     for (auto &element: jsonData) {
         if (element["provider"] == provider &&
             element["username"] == username) {
+            element["date"] = newDate.toString();
             if (flags.hash.has_value())
                 element["hash"] = flags.hash.value();
             if (flags.update.has_value())
@@ -71,7 +73,8 @@ void set::setEntry(const std::string &provider, const std::string &username) {
     if (!found) {
         json element = {
                 {"provider", provider},
-                {"username", username}
+                {"username", username},
+                {"date", newDate.toString()}
         };
         if (flags.hash.has_value())
             element["hash"] = flags.hash.value();

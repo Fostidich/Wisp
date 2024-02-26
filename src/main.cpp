@@ -12,6 +12,7 @@
 
 int main(int argc, char **argv) {
     //FIXME: multi word options ("...") are not recognised
+    //FIXME: apostrophe breaks everything
     assignFlags(argc, argv);
     return 0;
 }

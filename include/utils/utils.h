@@ -13,5 +13,7 @@
  */
 char randomChar();
 
+char getHiddenChar();
+
 
 #endif //UTILS_H

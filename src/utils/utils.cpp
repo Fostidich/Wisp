@@ -4,6 +4,8 @@
 
 #include "utils/utils.h"
 #include <random>
+#include <termios.h>
+#include <csignal>
 
 using namespace std;
 
@@ -23,4 +25,16 @@ char randomChar() {
     if (rand < 10) return char('0' + rand);
     if (rand < 36) return char('A' + rand - 10);
     else return char('a' + rand - 36);
+}
+
+char getHiddenChar() {
+    struct termios oldT{}, newT{};
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldT);
+    newT = oldT;
+    newT.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newT);
+    ch = static_cast<char>(getchar());
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldT);
+    return ch;
 }

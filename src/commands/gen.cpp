@@ -105,7 +105,11 @@ void gen::printList() {
     for (const auto &entryData: jsonData) {
         string provider = entryData["provider"];
         string username = entryData["username"];
-        entry newEntry = entry(provider, username);
+        string date;
+        if (entryData.contains("date")) date = entryData["date"];
+        else date = "2000-01-01";
+
+        entry newEntry = entry(provider, username, date);
         if (entryData.contains("hash")) {
             string hash = entryData["hash"];
             newEntry.setMask(hashMask(hash));

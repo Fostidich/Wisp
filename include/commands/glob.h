@@ -21,6 +21,18 @@ public:
      */
     glob(int argc, char **argv);
 
+/**
+ * Get the global hash value
+ * @return global hash string
+ */
+static std::string getHash();
+
+/**
+ * Get the global token value
+ * @return global token string
+ */
+static std::string getToken();
+
 private:
     /**
      * Flags struct contains:\n
@@ -36,13 +48,13 @@ private:
      * Update global hash value in config.ini
      * @param newHash new hash to set
      */
-    static void setHash(const std::string& newHash);
+    static void setHash(const std::string &newHash);
 
     /**
      * Update global token value in config.ini
      * @param newToken new token to set
      */
-    static void setToken(const std::string& newToken);
+    static void setToken(const std::string &newToken);
 
     /**
      * Generate a random token that can be set as the global one
@@ -54,11 +66,6 @@ private:
      */
     static void printToken();
 
-    /**
-     * Get the global token value
-     * @return global token string
-     */
-    static std::string getToken();
 };
 
 

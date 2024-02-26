@@ -2,11 +2,34 @@
 // Created by kello on 18/02/24.
 //
 
+#include <vector>
 #include "structures/entry.h"
 
-entry::entry(std::string &provider, std::string &username) :
+entry::entry(std::string &provider, std::string &username, std::string &sDate) :
         provider(provider), username(username) {
-    lastModified = date();
+    std::vector<int> result;
+    std::string::size_type pos = 0;
+    std::string::size_type nextPos = 0;
+
+    nextPos = sDate.find('-', pos);
+    if (nextPos == std::string::npos) {
+        lastModified = date();
+        return;
+    }
+    result.push_back(std::stoi(sDate.substr(pos, nextPos - pos)));
+
+    pos = nextPos + 1;
+    nextPos = sDate.find('-', pos);
+    if (nextPos == std::string::npos) {
+        lastModified = date();
+        return;
+    }
+    result.push_back(std::stoi(sDate.substr(pos, nextPos - pos)));
+
+    pos = nextPos + 1;
+    result.push_back(std::stoi(sDate.substr(pos)));
+
+    lastModified = date(result[0], result[1], result[2]);
 }
 
 std::string entry::getProvider() { return provider; }

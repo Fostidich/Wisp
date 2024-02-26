@@ -19,7 +19,7 @@ public:
      * @param provider provider input value
      * @param username username input value
      */
-    entry(std::string& provider, std::string& username);
+    entry(std::string& provider, std::string& username, std::string& sDate);
 
     /**
      * Getter for provider

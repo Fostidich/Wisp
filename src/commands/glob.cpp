@@ -109,3 +109,13 @@ std::string glob::getToken() {
     }
     return ini["globals"]["token"];
 }
+
+std::string glob::getHash() {
+    mINI::INIFile file(getExecutableDir() + "personal-data/config.ini");
+    mINI::INIStructure ini;
+    if (!file.read(ini)) {
+        cerr << "ERROR: unable to read from config.ini" << endl;
+        return "";
+    }
+    return ini["globals"]["hash"];
+}

@@ -1,5 +1,5 @@
 We have six different inputs:
-1. website
+1. provider
 2. username
 3. key
 4. token
@@ -8,7 +8,7 @@ We have six different inputs:
 
 ```
 // input hash
-list hashes <- get SHA256 bit string of website, username, key, token
+list hashes <- get SHA256 bit string of provider, username, key, token
 
 // updates shifts
 int shifts = 0
