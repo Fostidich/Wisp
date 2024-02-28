@@ -8,6 +8,9 @@
 
 #include "utils/flags.h"
 
+/// Input hashes shifts are multiplied by a constant
+extern const int SHIFT_MUL;
+
 class get {
 public:
     /**
@@ -41,6 +44,11 @@ private:
     std::unordered_map<std::string, std::string> *inputs;
 
     /**
+     * Calculated hash made from all inputs
+     */
+    unsigned char *fullHash;
+
+    /**
      * Inputs map attribute is filled with all necessary string, by retrieving them
      * from files or args
      */
@@ -51,13 +59,13 @@ private:
      * @param input is the string to make an hash of
      * @return the SHA256 hash in bytes form
      */
-    static unsigned char *getHash(const std::string &input);
+    static unsigned char *getSHA256(const std::string &input);
 
     /**
      * Print the hash attribute
      * @param mod select print mode (hex, bit, or empty)
      */
-    static void printHash(unsigned char *hash, const std::string &mod = "");
+    static void printHash(unsigned char *hash, const std::string &mod = "",  bool spaces = false);
 
     /**
      * Given the string name of the attribute, the value is returned.
@@ -67,6 +75,25 @@ private:
      * @return requested string value
      */
     std::string getEntryValue(const std::string &name);
+
+    /**
+     * Starting from inputs map, the full hash is calculated
+     */
+    void calculateHash();
+
+    /**
+     * Starting from the full hash previously calculated, a usable hash
+     * is printed based on the hash mask
+     */
+    void printHashWithMask();
+
+    /**
+     * Provided array is shifter right num times
+     * @param v is the vector to shift
+     * @param length is the length of the vector
+     * @param num is the number of shifts
+     */
+    static void shiftRight(unsigned char *v, size_t length, int num);
 };
 
 

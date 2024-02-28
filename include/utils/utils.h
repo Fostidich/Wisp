@@ -13,6 +13,11 @@
  */
 char randomChar();
 
+/**
+ * Input char is returned. Instead of normally printing the written
+ * char on terminal, a '*' is placed instead.
+ * @return input char
+ */
 char getHiddenChar();
 
 
