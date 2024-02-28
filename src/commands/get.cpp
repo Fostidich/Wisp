@@ -42,7 +42,7 @@ get::get(int argc, char **argv) {
 
 void get::retrieveInputs() {
     string key;
-    while(true) {
+    while (true) {
         cout << "Enter personal key: ";
         char ch;
         while ((ch = getHiddenChar()) != '\n') {
@@ -129,30 +129,42 @@ std::string get::getEntryValue(const string &name) {
 
 void get::calculateHash() {
     //input hash
-    vector<unsigned char*> hashes;
-    hashes.push_back(getSHA256(inputs->at("provider")));
-    hashes.push_back(getSHA256(inputs->at("username")));
-    hashes.push_back(getSHA256(inputs->at("key")));
-    hashes.push_back(getSHA256(inputs->at("token")));
+    auto hashes = new unsigned char *[4];
+    hashes[0] = getSHA256(inputs->at("provider"));
+    hashes[1] = getSHA256(inputs->at("username"));
+    hashes[2] = getSHA256(inputs->at("key"));
+    hashes[3] = getSHA256(inputs->at("token"));
 
     //update shifts
     int shifts = 0;
-    for (auto str : hashes) {
-        shiftRight(str, SHA256_DIGEST_LENGTH,
-                   SHIFT_MUL*shifts*stoi(inputs->at("update")));
+    for (int i = 0; i < 4; i++) {
+        shiftRight(hashes[i], SHA256_DIGEST_LENGTH,
+                   SHIFT_MUL * shifts * stoi(inputs->at("update")));
         shifts++;
     }
 
     //strings interweaving
-    unsigned char plot[SHA256_DIGEST_LENGTH * 4]; // 128 byte / 1024 bit
-    for (auto &str : hashes) {
-        for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-            auto b = str[i];
-            for (auto &B : plot) {
-                //TODO: interweave
-            }
-        }
+    auto plot = new unsigned char[SHA256_DIGEST_LENGTH]; // 128 byte / 1024 bit
+    fill_n(plot, SHA256_DIGEST_LENGTH, 0x00);
+
+    //FIXME: bit not spreading rightly
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        plot[i + 0] |= (hashes[0][i] >> 0) & 0x80;
+        plot[i + 0] |= (hashes[0][i] >> 3) & 0x08;
+        plot[i + 1] |= (hashes[0][i] << 2) & 0x80;
+        plot[i + 1] |= (hashes[0][i] >> 1) & 0x08;
+        plot[i + 2] |= (hashes[0][i] << 4) & 0x80;
+        plot[i + 2] |= (hashes[0][i] << 1) & 0x08;
+        plot[i + 3] |= (hashes[0][i] << 7) & 0x80;
+        plot[i + 3] |= (hashes[0][i] << 3) & 0x08;
     }
+
+    //TODO: other 3 inputs
+
+    printHash(hashes[0], "b", true);
+    printHash(plot, "b", true);
+
+    delete[] plot;
 }
 
 void get::printHashWithMask() {
