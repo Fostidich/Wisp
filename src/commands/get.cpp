@@ -47,7 +47,7 @@ void get::retrieveInputs() {
         char ch;
         while ((ch = getHiddenChar()) != '\n') {
             key += ch;
-            std::cout << '*';
+            std::cout << "";
         }
         cout << endl;
         if (key.empty()) cout << "No key inserted, try again" << endl;
@@ -144,25 +144,40 @@ void get::calculateHash() {
     }
 
     //strings interweaving
-    auto plot = new unsigned char[SHA256_DIGEST_LENGTH]; // 128 byte / 1024 bit
-    fill_n(plot, SHA256_DIGEST_LENGTH, 0x00);
-
-    //FIXME: bit not spreading rightly
-    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-        plot[i + 0] |= (hashes[0][i] >> 0) & 0x80;
-        plot[i + 0] |= (hashes[0][i] >> 3) & 0x08;
-        plot[i + 1] |= (hashes[0][i] << 2) & 0x80;
-        plot[i + 1] |= (hashes[0][i] >> 1) & 0x08;
-        plot[i + 2] |= (hashes[0][i] << 4) & 0x80;
-        plot[i + 2] |= (hashes[0][i] << 1) & 0x08;
-        plot[i + 3] |= (hashes[0][i] << 7) & 0x80;
-        plot[i + 3] |= (hashes[0][i] << 3) & 0x08;
+    auto plot = new unsigned char[4 * SHA256_DIGEST_LENGTH]; // 128 byte / 1024 bit
+    fill_n(plot, 4 * SHA256_DIGEST_LENGTH, 0x00);
+    for (int h = 0; h < 4; h++) {
+        for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+            plot[4 * i] |= (0x80 >> h) &
+                           (hashes[h][i] >> h);
+            plot[4 * i] |= (0x08 >> h) &
+                           (hashes[h][i] >> (3 + h));
+            plot[4 * i + 1] |= (0x80 >> h) &
+                               (h > 2 ? hashes[h][i] >> (h - 2) : (hashes[h][i] << (2 - h)));
+            plot[4 * i + 1] |= (0x08 >> h) &
+                               (hashes[h][i] >> (1 + h));
+            plot[4 * i + 2] |= (0x80 >> h) &
+                               (hashes[h][i] << (4 - h));
+            plot[4 * i + 2] |= (0x08 >> h) &
+                               (h > 1 ? hashes[h][i] >> (h - 1) : (hashes[h][i] << (1 - h)));
+            plot[4 * i + 3] |= (0x80 >> h) &
+                               (hashes[h][i] << (6 - h));
+            plot[4 * i + 3] |= (0x08 >> h) &
+                               (hashes[h][i] << (3 - h));
+        }
     }
 
-    //TODO: other 3 inputs
-
-    printHash(hashes[0], "b", true);
-    printHash(plot, "b", true);
+    for (int i = 0; i < 4; ++i) {
+        stringstream ss;
+        for (int j = 7; j >= 0; j--) {
+            ss << ((hashes[i][0] >> j) & 1);
+        }
+        ss << "\t";
+        for (int j = 7; j >= 0; j--) {
+            ss << ((plot[i] >> j) & 1);
+        }
+        cout << ss.str() << endl;
+    }
 
     delete[] plot;
 }
