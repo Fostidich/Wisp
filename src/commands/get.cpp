@@ -10,12 +10,12 @@
 #include <iomanip>
 #include <fstream>
 #include <list>
-#include <vector>
 #include "commands/get.h"
 #include "nlohmann/json.hpp"
 #include "utils/files.h"
 #include "commands/glob.h"
 #include "utils/utils.h"
+#include "structures/hashMask.h"
 
 //TODO: manage clipboard
 //TODO: set if new
@@ -27,6 +27,7 @@ const int SHIFT_MUL = 4;
 get::get(int argc, char **argv) {
     inputs = new unordered_map<string, string>();
     fullHash = new unsigned char[SHA_DIGEST_LENGTH * 4];
+
     flags = getFlags::parse_settings(argc, argv);
     if (flags.provider.has_value() && flags.username.has_value()) {
         retrieveInputs();
@@ -167,26 +168,20 @@ void get::calculateHash() {
         }
     }
 
-    for (int i = 0; i < 4; ++i) {
-        stringstream ss;
-        for (int j = 7; j >= 0; j--) {
-            ss << ((hashes[i][0] >> j) & 1);
-        }
-        ss << "\t";
-        for (int j = 7; j >= 0; j--) {
-            ss << ((plot[i] >> j) & 1);
-        }
-        cout << ss.str() << endl;
-    }
-
-    delete[] plot;
+    delete[] hashes;
+    fullHash = plot;
 }
 
 void get::printHashWithMask() {
+    hashMask hash(inputs->at("hash"));
 
+    
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "ConstantParameter"
 void get::shiftRight(unsigned char *v, size_t length, int num) {
+#pragma clang diagnostic pop
     typedef unsigned char byte;
     for (int t{0}; t < num; t++) {
         byte currentCarry = v[length - 1] & 0x01;
@@ -198,4 +193,3 @@ void get::shiftRight(unsigned char *v, size_t length, int num) {
         }
     }
 }
-
