@@ -68,4 +68,6 @@ Click [here](assets/help-text/help.txt) for command list
 Click [here](assets/help-text/helpExample.txt) for command examples
 
 - - -
+
+This is an enhanced version of the [Secret](https://github.com/Fostidich/Secret) project.
 ###### Code made by Francesco Ostidich

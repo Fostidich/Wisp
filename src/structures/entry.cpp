@@ -44,7 +44,7 @@ std::string entry::getAnnotation() { return annotation; }
 
 date entry::getLastModified() { return lastModified; }
 
-void entry::setMask(const class hashMask &newMask) { mask = newMask; }
+void entry::setMask(const hashMask& newMask) { mask = newMask; }
 
 void entry::setUpdate(unsigned int newUpdate) { update = newUpdate; }
 

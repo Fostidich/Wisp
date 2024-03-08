@@ -174,8 +174,8 @@ void get::calculateHash() {
 
 void get::printHashWithMask() {
     hashMask hash(inputs->at("hash"));
-
-    
+    hash.satisfyConstraints();
+    cout << hash.assign(fullHash) << endl;
 }
 
 #pragma clang diagnostic push
