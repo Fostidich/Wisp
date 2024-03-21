@@ -21,6 +21,15 @@ public:
      */
     get(int argc, char **argv);
 
+/**
+ * Print the hash attribute
+ * @param hash is the bit string to print
+ * @param length is the length of the plot array
+ * @param mod select print mode (hex, bit, or empty)
+ * @param spaces if true, spaces are added between bytes
+ */
+static void printHash(const unsigned char *hash, int length = 32, const std::string &mod = "",  bool spaces = false);
+
 private:
     /**
      * Flags struct contains:\n
@@ -60,12 +69,6 @@ private:
      * @return the SHA256 hash in bytes form
      */
     static unsigned char *getSHA256(const std::string &input);
-
-    /**
-     * Print the hash attribute
-     * @param mod select print mode (hex, bit, or empty)
-     */
-    static void printHash(unsigned char *hash, const std::string &mod = "",  bool spaces = false);
 
     /**
      * Given the string name of the attribute, the value is returned.

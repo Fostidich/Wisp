@@ -6,6 +6,7 @@ We have six different inputs:
 5. update
 6. hash mask
 
+### General algorithm:
 ```
 // input hash
 list hashes <- get SHA256 bit string of provider, username, key, token
@@ -33,4 +34,15 @@ for pos from 0 to hash_mask.len()
 
 // finish
 return result
+```
+
+### Mask to char conversion:
+```
+data[] <- bytes from input bits string 
+temp = 00000000
+for byte in data
+    temp = temp xor data
+
+char result = assign(temp)
+return temp
 ```

@@ -10,6 +10,9 @@
 #include <iostream>
 #include <cstring>
 
+//TODO: clean warnings
+//TODO: use exit code instead of returns when launching errors
+
 int main(int argc, char **argv) {
     //FIXME: multi word options ("...") are not recognised
     //FIXME: apostrophe breaks everything

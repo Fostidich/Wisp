@@ -78,7 +78,7 @@ private:
      * @param plot bits input string
      * @return sections integer array
      */
-    int *getSections(unsigned char *plot);
+    int *getSections(const unsigned char *plot) const;
 };
 
 

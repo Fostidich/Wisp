@@ -82,14 +82,14 @@ unsigned char *get::getSHA256(const string &input) {
     return hash;
 }
 
-void get::printHash(unsigned char *hash, const std::string &mod, bool spaces) {
+void get::printHash(const unsigned char *hash, int length, const std::string &mod, bool spaces) {
     if (mod.empty()) {
         cout << hash << endl;
         return;
     }
     if (mod == "bit" || mod == "b") {
         stringstream ss;
-        for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        for (size_t i = 0; i < length; i++) {
             for (int j = 7; j >= 0; j--) {
                 ss << ((hash[i] >> j) & 1);
             }
@@ -99,7 +99,7 @@ void get::printHash(unsigned char *hash, const std::string &mod, bool spaces) {
     } else if (mod == "hex" || mod == "h") {
         stringstream ss;
         ss << hex << setfill('0');
-        for (size_t i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+        for (size_t i = 0; i < length; i++) {
             ss << setw(2) << static_cast<unsigned int>(hash[i]);
         }
         cout << ss.str() << endl;
