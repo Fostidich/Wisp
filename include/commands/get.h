@@ -31,6 +31,7 @@ public:
 static void printHash(const unsigned char *hash, int length = 32, const std::string &mod = "",  bool spaces = false);
 
 private:
+
     /**
      * Flags struct contains:\n
      * - provider\n
@@ -40,7 +41,6 @@ private:
      * - clipboard\n
      */
     getFlags::Flags flags;
-
     /**
      * Inputs map contains the strings of:\n
      * - provider\n
@@ -57,18 +57,18 @@ private:
      */
     unsigned char *fullHash;
 
+/**
+ * Run SHA256 on the input string and store the digest into the hash attribute
+ * @param input is the string to make an hash of
+ * @return the SHA256 hash in bytes form
+ */
+    static unsigned char *getSHA256(const std::string &input);
+
     /**
      * Inputs map attribute is filled with all necessary string, by retrieving them
      * from files or args
      */
     void retrieveInputs();
-
-    /**
-     * Run SHA256 on the input string and store the digest into the hash attribute
-     * @param input is the string to make an hash of
-     * @return the SHA256 hash in bytes form
-     */
-    static unsigned char *getSHA256(const std::string &input);
 
     /**
      * Given the string name of the attribute, the value is returned.

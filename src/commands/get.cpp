@@ -26,7 +26,7 @@ const int SHIFT_MUL = 4;
 
 get::get(int argc, char **argv) {
     inputs = new unordered_map<string, string>();
-    fullHash = new unsigned char[SHA_DIGEST_LENGTH * 4];
+    fullHash = new unsigned char[SHA256_DIGEST_LENGTH];
 
     flags = getFlags::parse_settings(argc, argv);
     if (flags.provider.has_value() && flags.username.has_value()) {
@@ -37,7 +37,7 @@ get::get(int argc, char **argv) {
         cerr << "ERROR: provider and username are mandatory" << endl;
     }
 
-    delete fullHash;
+    delete[] fullHash;
     delete inputs;
 }
 
@@ -130,7 +130,7 @@ std::string get::getEntryValue(const string &name) {
 
 void get::calculateHash() {
     //input hash
-    auto hashes = new unsigned char *[4];
+    vector<unsigned char*> hashes(4);
     hashes[0] = getSHA256(inputs->at("provider"));
     hashes[1] = getSHA256(inputs->at("username"));
     hashes[2] = getSHA256(inputs->at("key"));
@@ -144,44 +144,25 @@ void get::calculateHash() {
         shifts++;
     }
 
-    //strings interweaving
-    auto plot = new unsigned char[4 * SHA256_DIGEST_LENGTH]; // 128 byte / 1024 bit
-    fill_n(plot, 4 * SHA256_DIGEST_LENGTH, 0x00);
-    for (int h = 0; h < 4; h++) {
-        for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-            plot[4 * i] |= (0x80 >> h) &
-                           (hashes[h][i] >> h);
-            plot[4 * i] |= (0x08 >> h) &
-                           (hashes[h][i] >> (3 + h));
-            plot[4 * i + 1] |= (0x80 >> h) &
-                               (h > 2 ? hashes[h][i] >> (h - 2) : (hashes[h][i] << (2 - h)));
-            plot[4 * i + 1] |= (0x08 >> h) &
-                               (hashes[h][i] >> (1 + h));
-            plot[4 * i + 2] |= (0x80 >> h) &
-                               (hashes[h][i] << (4 - h));
-            plot[4 * i + 2] |= (0x08 >> h) &
-                               (h > 1 ? hashes[h][i] >> (h - 1) : (hashes[h][i] << (1 - h)));
-            plot[4 * i + 3] |= (0x80 >> h) &
-                               (hashes[h][i] << (6 - h));
-            plot[4 * i + 3] |= (0x08 >> h) &
-                               (hashes[h][i] << (3 - h));
-        }
-    }
+    //input hashes xor
+    auto *plot = new unsigned char[SHA256_DIGEST_LENGTH];
+    for (int i = 0; i < SHA256_DIGEST_LENGTH; ++i)
+        plot[i] = hashes[0][i];
+    for (int i = 1; i < 4; ++i)
+        for (int j = 0; j < SHA256_DIGEST_LENGTH; ++j)
+            plot[j] ^= hashes[i][j];
 
-    delete[] hashes;
     fullHash = plot;
 }
 
 void get::printHashWithMask() {
     hashMask hash(inputs->at("hash"));
     hash.satisfyConstraints();
-    cout << hash.assign(fullHash) << endl;
+    string toPrint = hash.assign(fullHash);
+    cout << toPrint.c_str() << endl;
 }
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "ConstantParameter"
 void get::shiftRight(unsigned char *v, size_t length, int num) {
-#pragma clang diagnostic pop
     typedef unsigned char byte;
     for (int t{0}; t < num; t++) {
         byte currentCarry = v[length - 1] & 0x01;
