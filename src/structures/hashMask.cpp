@@ -5,7 +5,6 @@
 #include <openssl/sha.h>
 #include <iostream>
 #include "structures/hashMask.h"
-#include "commands/get.h"
 
 using namespace std;
 
@@ -35,13 +34,12 @@ std::string hashMask::toString() {
 }
 
 void hashMask::satisfyConstraints() {
-    //TODO
+    //TODO: write function
     for (int i = 0; i < splitsCount; ++i)
         splits[i] = stringForm[2 * i];
 }
 
 std::string hashMask::assign(unsigned char *plot) {
-    //TODO: to test
     char *result = new char[splitsCount + 1];
     int *sections = getSections(plot);
 

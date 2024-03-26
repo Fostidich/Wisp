@@ -11,6 +11,7 @@
 #include <filesystem>
 
 //TODO: manage absence of hash or token when they are get-requested
+//TODO: change and show for global hash
 
 using namespace std;
 

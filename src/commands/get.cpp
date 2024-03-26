@@ -17,8 +17,8 @@
 #include "utils/utils.h"
 #include "structures/hashMask.h"
 
-//TODO: manage clipboard
-//TODO: set if new
+//TODO: manage clipboard copy
+//TODO: set the entry in list if it's new
 
 using namespace std;
 
@@ -152,6 +152,7 @@ void get::calculateHash() {
         for (int j = 0; j < SHA256_DIGEST_LENGTH; ++j)
             plot[j] ^= hashes[i][j];
 
+    //finish
     fullHash = plot;
 }
 
@@ -165,8 +166,8 @@ void get::printHashWithMask() {
 void get::shiftRight(unsigned char *v, size_t length, int num) {
     typedef unsigned char byte;
     for (int t{0}; t < num; t++) {
-        byte currentCarry = v[length - 1] & 0x01;
-        for (size_t i{0}; i < length; i++) {
+        byte currentCarry = v[32 - 1] & 0x01;
+        for (size_t i{0}; i < 32; i++) {
             byte carry = v[i] & 0x01;
             v[i] >>= 1;
             v[i] |= (currentCarry << 7);

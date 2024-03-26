@@ -28,7 +28,7 @@ public:
  * @param mod select print mode (hex, bit, or empty)
  * @param spaces if true, spaces are added between bytes
  */
-static void printHash(const unsigned char *hash, int length = 32, const std::string &mod = "",  bool spaces = false);
+static void printHash(const unsigned char *hash, int length = 32, const std::string &mod = "b",  bool spaces = true);
 
 private:
 
