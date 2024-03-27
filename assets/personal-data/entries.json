@@ -59,5 +59,12 @@
         "hash": "c.d.c.d.c.d.c.d.c.d.c.d.c.d.c.d",
         "provider": "everli",
         "username": "jhon"
+    },
+    {
+        "date": "2024-03-27",
+        "hash": ".a.b.c.d.",
+        "provider": "gemini",
+        "update": 67,
+        "username": "king"
     }
 ]

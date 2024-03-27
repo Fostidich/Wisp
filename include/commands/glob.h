@@ -66,6 +66,10 @@ private:
      */
     static void printToken();
 
+    /**
+     * If directory or file do not exist, they are generated.
+     */
+    static void checkDir();
 };
 
 

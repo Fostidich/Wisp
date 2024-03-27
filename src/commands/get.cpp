@@ -31,6 +31,7 @@ get::get(int argc, char **argv) {
     flags = getFlags::parse_settings(argc, argv);
     if (flags.provider.has_value() && flags.username.has_value()) {
         retrieveInputs();
+        checkInputs();
         calculateHash();
         printHashWithMask();
     } else {
@@ -172,6 +173,27 @@ void get::shiftRight(unsigned char *v, size_t length, int num) {
             v[i] >>= 1;
             v[i] |= (currentCarry << 7);
             currentCarry = carry;
+        }
+    }
+}
+
+void get::checkInputs() {
+    auto toAddUpdate = make_pair("update", to_string(stoi(inputs->at("update")) % 64));
+    inputs->erase("update");
+    inputs->insert(toAddUpdate);
+
+    if (inputs->at("hash").front() == '.' || inputs->at("hash").back() == '.') {
+        cerr << "ERROR: Hash mask is not valid; a valid one will be used instead" << endl;
+        auto toAddHash = make_pair("hash", "a.a.b.b.-.c.c.d.d");
+        inputs->erase("hash");
+        inputs->insert(toAddHash);
+    }
+    for (auto ch : inputs->at("hash")) {
+        if (ch != 'a' && ch != 'b' && ch != 'c' && ch != 'd' && ch != '.' && ch != '-') {
+            cerr << "ERROR: Hash mask is not valid; a valid one will be used instead" << endl;
+            auto toAddHash = make_pair("hash", "a.a.b.b.-.c.c.d.d");
+            inputs->erase("hash");
+            inputs->insert(toAddHash);
         }
     }
 }

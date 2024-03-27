@@ -97,6 +97,11 @@ private:
      * @param num is the number of shifts
      */
     static void shiftRight(unsigned char *v, size_t length, int num);
+
+    /**
+     * Inputs are checked for validity. If they are not, execution ends.
+     */
+    void checkInputs();
 };
 
 

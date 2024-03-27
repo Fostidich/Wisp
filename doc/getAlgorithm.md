@@ -9,40 +9,28 @@ We have six different inputs:
 ### General algorithm:
 ```
 // input hash
-list hashes <- get SHA256 bit string of provider, username, key, token
+init list hashes <- SHA256 of provider, username, key, token
 
 // update shifts
-int shifts = 0
+shifts = 0
 for str in hashes
     shift_right(str, const(4)*shifts*update)
     shifts++
     
-// strings interweaving
-init string plot with len 1024
-for pos from 0 to 255
-    plot[4*pos+0] = hashes.get(0)[pos]
-    plot[4*pos+1] = hashes.get(1)[pos]
-    plot[4*pos+2] = hashes.get(2)[pos]
-    plot[4*pos+3] = hashes.get(3)[pos]
+// input hashes xor
+init plot <- hashes[0]
+for i from 1 to 4
+    plot = plot xor hashes[i]   
     
 // convert plot to hash with hash mask
-int word_size = 1024 / hash_mask.len()
-init string result with len hash_mask.len()
-for pos from 0 to hash_mask.len()
-    string temp = string_section(plot, word_size*pos, word_size*pos+word_size)
-    result[pos] = mask_to_char(hash_mask[pos], temp)
-
+satisfy hash mask constraints
+init temp2, temp <- plot
+for char in hash mask
+    temp2 <- SHA256 of temp
+    num <- byte xor of temp2
+    result->add(num)
+    temp <- temp2
+    
 // finish
-return result
-```
-
-### Mask to char conversion:
-```
-data[] <- bytes from input bits string 
-temp = 00000000
-for byte in data
-    temp = temp xor data
-
-char result = assign(temp)
-return temp
+print hashMask->assign(result)
 ```
