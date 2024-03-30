@@ -159,7 +159,7 @@ void get::calculateHash() {
 
 void get::printHashWithMask() {
     hashMask hash(inputs->at("hash"));
-    hash.satisfyConstraints();
+    hash.satisfyConstraints(fullHash);
     string toPrint = hash.assign(fullHash);
     cout << toPrint.c_str() << endl;
 }
@@ -184,16 +184,20 @@ void get::checkInputs() {
 
     if (inputs->at("hash").front() == '.' || inputs->at("hash").back() == '.') {
         cerr << "ERROR: Hash mask is not valid; a valid one will be used instead" << endl;
-        auto toAddHash = make_pair("hash", "a.a.b.b.-.c.c.d.d");
+        auto toAddHash = make_pair("hash", "b.ab.ab.a.-.c.c.c.c");
         inputs->erase("hash");
         inputs->insert(toAddHash);
     }
+    char temp = '.';
     for (auto ch : inputs->at("hash")) {
-        if (ch != 'a' && ch != 'b' && ch != 'c' && ch != 'd' && ch != '.' && ch != '-') {
+        if (ch != 'a' && ch != 'b' && ch != 'c' && ch != 'd' && ch != '.' && ch != '-' ||
+        ch == '.' && temp == '.') {
             cerr << "ERROR: Hash mask is not valid; a valid one will be used instead" << endl;
-            auto toAddHash = make_pair("hash", "a.a.b.b.-.c.c.d.d");
+            auto toAddHash = make_pair("hash", "b.ab.ab.a.-.c.c.c.c");
             inputs->erase("hash");
             inputs->insert(toAddHash);
+            break;
         }
+        temp = ch;
     }
 }

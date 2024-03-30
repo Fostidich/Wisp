@@ -4,7 +4,7 @@
 
 #include <openssl/sha.h>
 #include <iostream>
-#include <unordered_set>
+#include <vector>
 #include "structures/hashMask.h"
 
 using namespace std;
@@ -34,11 +34,19 @@ std::string hashMask::toString() {
     return stringForm;
 }
 
-void hashMask::satisfyConstraints() {
-    //TODO: write function
-    for (int i = 0; i < splitsCount; ++i)
-        splits[i] = stringForm[2 * i];
-
+void hashMask::satisfyConstraints(const unsigned char *plot) {
+    auto buffer = new vector<char>;
+    int pos = 0;
+    for (auto ch: stringForm + '.') {
+        if (ch == '.') {
+            splits[pos] = buffer->at(plot[pos % SHA256_DIGEST_LENGTH] % buffer->size());
+            delete buffer;
+            buffer = new vector<char>;
+            pos++;
+            continue;
+        }
+        buffer->push_back(ch);
+    }
 }
 
 std::string hashMask::assign(unsigned char *plot) {

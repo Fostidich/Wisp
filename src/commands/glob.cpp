@@ -114,7 +114,7 @@ std::string glob::getHash() {
         return "";
     }
     if (ini["globals"]["hash"].empty()) {
-        string defHash = "a.a.b.b.-.c.c.d.d";
+        string defHash = "b.ab.ab.a.-.c.c.d.d";
         cerr << "ERROR: no hash mask was set" << endl;
         setHash(defHash);
         cout << "New hash mask has been generated" << endl;

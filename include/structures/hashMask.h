@@ -42,8 +42,9 @@ public:
      * Hash mask is reduced to have only one possible character type for section.
      * Every character type that appears will be found in the satisfied hash mask at least once
      * (if possible).
+     * @param plot hash of the inputs
      */
-    void satisfyConstraints();
+    void satisfyConstraints(const unsigned char* plot);
 
     /**
      * Plot is split in sections and the hash (from hash mask) is computed.
