@@ -17,8 +17,8 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../target)
 
-execute_process(COMMAND sh -c "ln -s ../assets/help-text ../target 2>/dev/null"
-        COMMAND sh -c "ln -s ../assets/personal-data ../target 2>/dev/null"
+execute_process(COMMAND sh -c "mkdir ../target"
+        COMMAND sh -c "ln -s ../assets/personal-data ../target/wisp-data 2>/dev/null"
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 find_package(OpenSSL REQUIRED)
