@@ -6,7 +6,9 @@ enum class command {
 };
 
 enum class flag {
-    unknownFlag, help
+    unknownFlag, help, mask, example, version, random, destroy, list,
+    provider, username, hash, update, clipboard, annotation, remove,
+    token, change, generate, show
 };
 
 #endif
