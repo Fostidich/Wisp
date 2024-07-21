@@ -13,12 +13,12 @@ request::request(const std::vector<std::string>& args) : flags() {
         command = command::general;
         builderGeneral(args);
     }
-    else if (args[1].compare("glob") == 0)
+    else if (args[1].compare("global") == 0)
         command = command::global;
     else if (args[1].compare("get") == 0)
-        command = command::getter;
+        command = command::get;
     else if (args[1].compare("set") == 0)
-        command = command::setter;
+        command = command::set;
     else {
         command = command::unknownCommand;
         unhandled = args[1];

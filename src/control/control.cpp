@@ -24,9 +24,9 @@ void control::execute(const request &request) {
         break;
     case command::global:
         break;
-    case command::getter:
+    case command::get:
         break;
-    case command::setter:
+    case command::set:
         break;
     case command::unknownCommand:
         ui::unknownCommandError(request.getUnhandled());
