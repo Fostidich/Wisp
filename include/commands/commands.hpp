@@ -1,11 +1,7 @@
-#ifndef CONTROL_HPP
-#define CONTROL_HPP
+#ifndef COMMANDS_HPP
+#define COMMANDS_HPP
 
-#include <string>
-
-class commands {
-public:
-    std::string getHelpText();
-};
+namespace commands {
+}
 
 #endif

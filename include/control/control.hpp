@@ -1,11 +1,10 @@
 #ifndef CONTROL_HPP
 #define CONTROL_HPP
 
-#include "request.hpp"
+#include <control/request.hpp>
 
-class control {
-public:
-    void execute(request request);
+namespace control {
+    void execute(const request& request);
 };
 
 #endif

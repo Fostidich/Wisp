@@ -3,9 +3,11 @@
 
 #include <string>
 
-class ui {
-public:
-    void printHelpText(std::string text);
-};
+namespace ui {
+    void noArgumentError();
+    void unknownCommandError(const std::string& text);
+    void unknownFlagError(const std::string& text);
+    void printHelpText();
+}
 
 #endif

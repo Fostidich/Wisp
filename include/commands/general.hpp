@@ -3,9 +3,6 @@
 
 #include <string>
 
-class general {
-public:
-    std::string getHelpText();
-};
+std::string getHelpText();
 
 #endif

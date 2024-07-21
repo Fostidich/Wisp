@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(wisp)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 enable_language(C)
@@ -17,8 +17,8 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 set_target_properties(${PROJECT_NAME} PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../target)
 
-execute_process(COMMAND sh -c "mkdir ../target"
-        COMMAND sh -c "ln -s ../assets/personal-data ../target/wisp-data 2>/dev/null"
+execute_process(COMMAND sh -c "mkdir ../target 2>/dev/null"
+        COMMAND sh -c "ln -s ../assets/personal-data ../target 2>/dev/null"
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 find_package(OpenSSL REQUIRED)
