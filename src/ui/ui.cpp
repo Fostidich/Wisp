@@ -1,11 +1,9 @@
-#include <ui/ui.hpp>
 #include <iostream>
+#include <ui/ui.hpp>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands";
 
-void ui::noArgumentError() {
-    std::cerr << "No argument provided. " << suggestHelp << std::endl;
-}
+void ui::noArgumentError() { std::cerr << "No argument provided. " << suggestHelp << std::endl; }
 
 void ui::unknownCommandError(const std::string &text) {
     std::cerr << "Unknown command: \"" << text << "\". " << suggestHelp << std::endl;
@@ -13,6 +11,14 @@ void ui::unknownCommandError(const std::string &text) {
 
 void ui::unknownFlagError(const std::string &text) {
     std::cerr << "Unknown flag: \"" << text << "\". " << suggestHelp << std::endl;
+}
+
+void ui::noValueError(const std::string &text) {
+    std::cerr << "Flag \"" << text << "\" requires a value. " << suggestHelp << std::endl;
+}
+
+void ui::noOptionError(const std::string &text) {
+    std::cerr << "Command \"" << text << "\" requires option flags. " << suggestHelp << std::endl;
 }
 
 void ui::printHelpText() {

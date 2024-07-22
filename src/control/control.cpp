@@ -2,39 +2,54 @@
 #include <control/enums.hpp>
 #include <ui/ui.hpp>
 
+static void handlerError(enum error error, const std::string &unhandled);
 static void handlerGeneral(const std::map<enum flag, std::string> &flags);
 
 void control::execute(const request &request) {
-    enum command command = request.getCommand();
+    // Retrieve request data
     const auto &flags = request.getFlags();
+    auto command = request.getCommand();
+    auto error = request.getError();
+    const auto &unhandled = request.getUnhandled();
 
-    // Unknown flag check
-    if (flags.contains(flag::unknownFlag)) {
-        ui::unknownFlagError(request.getUnhandled());
-        exit(1);
-    }
+    // Check and manage errors
+    if (error != error::none) handlerError(error, unhandled);
 
     // Switch with the command value in the request to the right command handler
     switch (command) {
-    case command::noArgument:
-        ui::noArgumentError();
-        exit(1);
-    case command::general:
-        handlerGeneral(flags);
-        break;
-    case command::global:
-        break;
-    case command::get:
-        break;
-    case command::set:
-        break;
-    case command::unknownCommand:
-        ui::unknownCommandError(request.getUnhandled());
-        exit(1);
+        case command::general:
+            handlerGeneral(flags);
+            break;
+        case command::global:
+            break;
+        case command::get:
+            break;
+        case command::set:
+            break;
     }
 }
 
+static void handlerError(enum error error, const std::string &unhandled) {
+    switch (error) {
+        case error::noArgument:
+            ui::noArgumentError();
+            break;
+        case error::unknownCommand:
+            ui::unknownCommandError(unhandled);
+            break;
+        case error::unknownFlag:
+            ui::unknownFlagError(unhandled);
+            break;
+        case error::noValue:
+            ui::noValueError(unhandled);
+            break;
+        case error::noOption:
+            ui::noOptionError(unhandled);
+            break;
+    }
+    exit(static_cast<int>(error));
+}
+
 static void handlerGeneral(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::help))
-        ui::printHelpText();
+    if (flags.contains(flag::help)) ui::printHelpText();
 }
