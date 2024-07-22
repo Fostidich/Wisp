@@ -20,7 +20,20 @@ class request {
     enum error error { error::none };
     std::string unhandled;
 
-    bool checkInternalUnknownCommand(int start, const std::vector<std::string>& args);
+    bool checkArgumentsIntegrity(int start, std::string& lastFlag,
+                                 const std::vector<std::string>& args,
+                                 const std::vector<std::string>& vLong,
+                                 const std::vector<std::string>& vShort);
+    bool checkAtLeastOneFlag(int start, const std::vector<std::string>& args);
+    bool checkInternalUnknownCommand(int start,
+                                     const std::vector<std::string>& args);
+    bool checkFlagRecognition(std::string& lastFlag,
+                              const std::vector<std::string>& args,
+                              const std::vector<std::string>& vLong,
+                              const std::vector<std::string>& vShort);
+    bool findFlagValue(enum flag flag, const std::string& v1,
+                       const std::string& v2, bool hasValue,
+                       const std::vector<std::string>& args);
     void builderGeneral(const std::vector<std::string>& args);
     void builderGlobal(const std::vector<std::string>& args);
     void builderGet(const std::vector<std::string>& args);

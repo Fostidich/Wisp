@@ -22,12 +22,15 @@ enum class flag {
 };
 
 enum class error {
-    none = 0,
-    noArgument = 1,
-    unknownCommand = 2,
-    unknownFlag = 3,
-    noValue = 4,
-    noOption = 5
+    none,
+    noArgument,
+    unknownCommand,
+    unknownFlag,
+    doubleFlag,
+    incompatibleFlags,
+    noValue,
+    noOption,
+    mandatoryFlag
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ui/ui.hpp>
 
-const std::string suggestHelp = "Use \"wisp --help\" for a list of commands";
+const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
 
 void ui::noArgumentError() { std::cerr << "No argument provided. " << suggestHelp << std::endl; }
 
@@ -13,12 +13,24 @@ void ui::unknownFlagError(const std::string &text) {
     std::cerr << "Unknown flag: \"" << text << "\". " << suggestHelp << std::endl;
 }
 
+void ui::doubleFlagError(const std::string &text) {
+    std::cerr << "Flag \"" << text << "\" cannot be repeated. " << suggestHelp << std::endl;
+}
+
+void ui::incompatibleFlagsError(const std::string &text) {
+    std::cerr << "Flag \"" << text << "\" cannot be used with priors. " << suggestHelp << std::endl;
+}
+
 void ui::noValueError(const std::string &text) {
     std::cerr << "Flag \"" << text << "\" requires a value. " << suggestHelp << std::endl;
 }
 
 void ui::noOptionError(const std::string &text) {
     std::cerr << "Command \"" << text << "\" requires option flags. " << suggestHelp << std::endl;
+}
+
+void ui::mandatoryFlagError(const std::string &text) {
+    std::cerr << "Flag \"" << text << "\" is mandatory. " << suggestHelp << std::endl;
 }
 
 void ui::printHelpText() {
@@ -36,14 +48,14 @@ void ui::printHelpText() {
         -p, --provider <*provider*>     Generate hash with the specified provider
         -u, --username <*username*>     Generate hash with the specified username
         -f, --format <format>           Use a custom format for generation
-        -n, --update <update>           Use a custom update number for generation
+        -n, --update <update number>    Use a custom update number for generation
         -c, --clipboard                 Save the hash to clipboard without printing it
 
     wisp set - Add custom settings:
         -p, --provider <*provider*>     Add settings for the entry with this provider
         -u, --username <*username*>     Add settings for the entry with this username
         -f, --format <format>           Set format for the selected entry
-        -n, --update <update>           Set update number for the selected entry
+        -n, --update <update number>    Set update number for the selected entry
         -a, --annotation <"note">       Set a note for the selected entry
         -r, --remove                    Remove the entry from the list
 

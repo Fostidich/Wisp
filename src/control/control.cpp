@@ -2,9 +2,6 @@
 #include <control/enums.hpp>
 #include <ui/ui.hpp>
 
-static void handlerError(enum error error, const std::string &unhandled);
-static void handlerGeneral(const std::map<enum flag, std::string> &flags);
-
 void control::execute(const request &request) {
     // Retrieve request data
     const auto &flags = request.getFlags();
@@ -21,15 +18,18 @@ void control::execute(const request &request) {
             handlerGeneral(flags);
             break;
         case command::global:
+            handlerGlobal(flags);
             break;
         case command::get:
+            handlerGet(flags);
             break;
         case command::set:
+            handlerSet(flags);
             break;
     }
 }
 
-static void handlerError(enum error error, const std::string &unhandled) {
+void handlerError(enum error error, const std::string &unhandled) {
     switch (error) {
         case error::noArgument:
             ui::noArgumentError();
@@ -40,16 +40,37 @@ static void handlerError(enum error error, const std::string &unhandled) {
         case error::unknownFlag:
             ui::unknownFlagError(unhandled);
             break;
+        case error::doubleFlag:
+            ui::doubleFlagError(unhandled);
+            break;
+        case error::incompatibleFlags:
+            ui::incompatibleFlagsError(unhandled);
+            break;
         case error::noValue:
             ui::noValueError(unhandled);
             break;
         case error::noOption:
             ui::noOptionError(unhandled);
             break;
+        case error::mandatoryFlag:
+            ui::mandatoryFlagError(unhandled);
+            break;
     }
     exit(static_cast<int>(error));
 }
 
-static void handlerGeneral(const std::map<enum flag, std::string> &flags) {
+void handlerGeneral(const std::map<enum flag, std::string> &flags) {
     if (flags.contains(flag::help)) ui::printHelpText();
+}
+
+void handlerGlobal(const std::map<enum flag, std::string> &flags) {
+    if (flags.contains(flag::token)) ui::printHelpText();
+}
+
+void handlerGet(const std::map<enum flag, std::string> &flags) {
+    if (flags.contains(flag::provider)) ui::printHelpText();
+}
+
+void handlerSet(const std::map<enum flag, std::string> &flags) {
+    if (flags.contains(flag::username)) ui::printHelpText();
 }
