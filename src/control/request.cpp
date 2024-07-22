@@ -2,8 +2,6 @@
 #include <vector>
 
 request::request(const std::vector<std::string> &args) : flags() {
-    // TODO pack "..." args into a single one
-
     // Switch with the provided command to the right request builder
     if (args.size() <= 1)
         error = error::noArgument;
@@ -164,6 +162,7 @@ void request::builderGeneral(const std::vector<std::string> &args) {
     if (flags.size() > 1) {
         error = error::incompatibleFlags;
         unhandled = lastFlag;
+        return;
     }
 }
 
@@ -179,15 +178,16 @@ void request::builderGlobal(const std::vector<std::string> &args) {
     std::string lastFlag;
     if (!checkArgumentsIntegrity(2, lastFlag, args, vLong, vShort)) return;
 
-    // TODO add an empty string after global token or format
+    // Add an empty string after unvalued token or format
     auto args2 = args;
     for (int i = 0; i < args2.size(); i++) {
         if ((args2.size() == i + 1 || args2[i + 1][0] == '-') &&
             (args2[i].compare(vShort[0]) == 0 ||
              args2[i].compare(vShort[1]) == 0 ||
-             args2[i].compare(vLong[0]) == 0 || args2[i].compare(vLong[1]) == 0))
-             args2.insert(args2.begin() + i + 1, "");
-             i++;
+             args2[i].compare(vLong[0]) == 0 ||
+             args2[i].compare(vLong[1]) == 0))
+            args2.insert(args2.begin() + i + 1, "");
+        i++;
     }
 
     // Populate flags map
@@ -200,6 +200,7 @@ void request::builderGlobal(const std::vector<std::string> &args) {
     if (flags.size() > 1) {
         error = error::incompatibleFlags;
         unhandled = lastFlag;
+        return;
     }
 }
 
