@@ -12,7 +12,13 @@ void incompatibleFlagsError(const std::string& text);
 void noValueError(const std::string& text);
 void noOptionError(const std::string& text);
 void mandatoryFlagError(const std::string& text);
-void printHelpText();
+void helpText();
+void formatText();
+void exampleText();
+void versionText(const std::string& text);
+void randomKey(const std::string& text);
+void destroyOutcome(bool outcome);
+void showList();
 }
 
 #endif

@@ -1,6 +1,9 @@
 #include <control/control.hpp>
 #include <control/enums.hpp>
 #include <ui/ui.hpp>
+#include <commands/commands.hpp>
+
+#define VERSION "0.2.0"
 
 void control::execute(const request &request) {
     // Retrieve request data
@@ -60,17 +63,39 @@ void handlerError(enum error error, const std::string &unhandled) {
 }
 
 void handlerGeneral(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::help)) ui::printHelpText();
+    switch (flags.begin()->first) {
+        case flag::help:
+            ui::helpText();
+            break;
+        case flag::format:
+            ui::formatText();
+            break;
+        case flag::example:
+            ui::exampleText();
+            break;
+        case flag::version:
+            ui::versionText(VERSION);
+            break;
+        case flag::random:
+            ui::randomKey(commands::generateRandomKey());
+            break;
+        case flag::destroy:
+            ui::destroyOutcome(commands::deleteData());
+            break;
+        case flag::list:
+            ui::showList();
+            break;
+    }
 }
 
 void handlerGlobal(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::token)) ui::printHelpText();
+    if (flags.contains(flag::token)) ui::helpText();
 }
 
 void handlerGet(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::provider)) ui::printHelpText();
+    if (flags.contains(flag::provider)) ui::helpText();
 }
 
 void handlerSet(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::username)) ui::printHelpText();
+    if (flags.contains(flag::username)) ui::helpText();
 }
