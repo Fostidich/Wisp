@@ -2,5 +2,6 @@ obj
 target
 build
 .vscode
+.cache
 .idea
 *.mdj

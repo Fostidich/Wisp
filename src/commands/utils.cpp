@@ -1,14 +1,10 @@
-#include <termios.h>
-
-#include <csignal>
-#include <random>
-#ifdef _WIN32
-#include <windows.h>
-#elif __linux__
-#include <unistd.h>
+#include "commands/utils.hpp"
 
 #include <climits>
-#endif
+#include <csignal>
+#include <random>
+#include <termios.h>
+#include <unistd.h>
 
 char randomChar() {
     std::random_device rd;
@@ -53,20 +49,11 @@ std::string getExecutableDir() {
 }
 
 std::string getExecutablePath() {
-#ifdef _WIN32
-    char buffer[MAX_PATH];
-    GetModuleFileNameA(NULL, buffer, MAX_PATH);
-    return std::string(buffer);
-#elif __linux__
     char buffer[PATH_MAX];
     ssize_t len = readlink("/proc/self/exe", buffer, sizeof(buffer) - 1);
     if (len != -1) {
         buffer[len] = '\0';
         return buffer;
-    } else {
-        return "";
     }
-#else
     return "";
-#endif
 }

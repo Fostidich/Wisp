@@ -1,7 +1,10 @@
 #ifndef UI_HPP
 #define UI_HPP
 
+#include "control/entry.hpp"
+
 #include <string>
+#include <vector>
 
 namespace ui {
 void noArgumentError();
@@ -17,8 +20,9 @@ void formatText();
 void exampleText();
 void versionText(const std::string& text);
 void randomKey(const std::string& text);
+bool askConfirmation(const std::string& text);
 void destroyOutcome(bool outcome);
-void showList();
+void showList(const std::vector<entry> &entries);
 }
 
 #endif

@@ -1,5 +1,7 @@
+#include "ui/ui.hpp"
+
+#include <cmath>
 #include <iostream>
-#include <ui/ui.hpp>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
 
@@ -111,7 +113,17 @@ void ui::versionText(const std::string &text) {
     std::cout << "Wisp version: " << text << std::endl;
 }
 
-void ui::randomKey(const std::string &text) { std::cout << text << std::endl; }
+void ui::randomKey(const std::string &text) {
+    std::cout << text << std::endl;
+}
+
+bool ui::askConfirmation(const std::string &text) {
+    std::cout << text << std::endl;
+    std::cout << "Write \"CONFIRM\" to proceed: ";
+    std::string confirm;
+    getline(std::cin, confirm);
+    return confirm.compare("CONFIRM") == 0;
+}
 
 void ui::destroyOutcome(bool outcome) {
     const std::string toPrint =
@@ -119,6 +131,22 @@ void ui::destroyOutcome(bool outcome) {
     std::cout << toPrint << std::endl;
 }
 
-void ui::showList() {  // TODO
-    std::cout << "LIST" << std::endl;
+void ui::showList(const std::vector<entry> &entries) {
+    if (entries.empty()) {
+        std::cout << "No data to show." << std::endl;
+        return;
+    }
+
+    int providerMaxLen = 1, usernameMaxLen = 1, updateMaxLen = 1;
+    for (const auto &e : entries) {
+        int p = e.getProvider().size();
+        int u = e.getUsername().size();
+        int n = std::log10(e.getUpdate()) + 1;
+        if (p > providerMaxLen) providerMaxLen = p;
+        if (u > usernameMaxLen) usernameMaxLen = u;
+        if (n > updateMaxLen) updateMaxLen = n;
+    }
+    for (const auto &e : entries)
+        std::cout << e.toString(providerMaxLen, usernameMaxLen, updateMaxLen)
+                  << std::endl;
 }

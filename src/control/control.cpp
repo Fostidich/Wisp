@@ -1,7 +1,7 @@
-#include <control/control.hpp>
-#include <control/enums.hpp>
-#include <ui/ui.hpp>
-#include <commands/commands.hpp>
+#include "commands/commands.hpp"
+#include "control/control.hpp"
+#include "control/enums.hpp"
+#include "ui/ui.hpp"
 
 #define VERSION "0.2.0"
 
@@ -58,6 +58,8 @@ void handlerError(enum error error, const std::string &unhandled) {
         case error::mandatoryFlag:
             ui::mandatoryFlagError(unhandled);
             break;
+        default:
+            exit(static_cast<int>(error));
     }
     exit(static_cast<int>(error));
 }
@@ -80,11 +82,15 @@ void handlerGeneral(const std::map<enum flag, std::string> &flags) {
             ui::randomKey(commands::generateRandomKey());
             break;
         case flag::destroy:
-            ui::destroyOutcome(commands::deleteData());
+            ui::destroyOutcome(
+                ui::askConfirmation("Do you really want to delete all personal data?") &&
+                commands::deleteData());
             break;
         case flag::list:
-            ui::showList();
+            ui::showList(commands::retrieveEntries());
             break;
+        default:
+            exit(static_cast<int>(error::noOption));
     }
 }
 
