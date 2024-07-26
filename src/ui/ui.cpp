@@ -55,6 +55,11 @@ void ui::helpText() {
         -d, --destroy                   Immediately destroy all saved information
         -l, --list                      Access stored data
 
+    wisp global - Global settings:
+        -f, --format <(format)>         Set or show global hash format
+        -t, --token <(token)>           Set or show the private token
+        -g, --generate                  Generate a new private token
+
     wisp get - Generate hash:
         -p, --provider <*provider*>     Generate hash with the specified provider
         -u, --username <*username*>     Generate hash with the specified username
@@ -69,11 +74,6 @@ void ui::helpText() {
         -n, --update <update number>    Set update number for the selected entry
         -a, --annotation <"note">       Set a note for the selected entry
         -r, --remove                    Remove the entry from the list
-
-    wisp global - Global settings:
-        -f, --format <(format)>         Set or show global hash format
-        -t, --token <(token)>           Set or show the private token
-        -g, --generate                  Generate a new private token
     )" << std::endl;
 }
 
@@ -149,4 +149,24 @@ void ui::showList(const std::vector<entry> &entries) {
     for (const auto &e : entries)
         std::cout << e.toString(providerMaxLen, usernameMaxLen, updateMaxLen)
                   << std::endl;
+}
+
+void showFormat(std::string format) {
+
+}
+
+void newFormat(bool outcome, std::string newFormat) {
+
+}
+
+void showToken(std::string token) {
+
+}
+
+void newToken(bool outcome, std::string newToken) {
+
+}
+
+bool showGeneratedToken(std::string token) {
+
 }

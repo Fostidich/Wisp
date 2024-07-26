@@ -83,7 +83,8 @@ void handlerGeneral(const std::map<enum flag, std::string> &flags) {
             break;
         case flag::destroy:
             ui::destroyOutcome(
-                ui::askConfirmation("Do you really want to delete all personal data?") &&
+                ui::askConfirmation(
+                    "Do you really want to delete all personal data?") &&
                 commands::deleteData());
             break;
         case flag::list:
@@ -95,7 +96,32 @@ void handlerGeneral(const std::map<enum flag, std::string> &flags) {
 }
 
 void handlerGlobal(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::token)) ui::helpText();
+    switch (flags.begin()->first) {
+        case flag::format: {
+            const std::string &v = flags.at(flag::format);
+            if (v.empty())
+                ui::showFormat(commands::getFormat());
+            else if (bool outcome = commands::setFormat(v))
+                ui::newFormat(outcome, v);
+            break;
+        }
+        case flag::token: {
+            const std::string &v = flags.at(flag::token);
+            if (v.empty())
+                ui::showToken(commands::getToken());
+            else if (bool outcome = commands::setToken(v))
+                ui::newToken(outcome, v);
+            break;
+        }
+        case flag::generate: {
+            std::string t = commands::generateToken();
+            if (bool outcome = ui::showGeneratedToken(t))
+                ui::newToken(outcome, t);
+            break;
+        }
+        default:
+            exit(static_cast<int>(error::noOption));
+    }
 }
 
 void handlerGet(const std::map<enum flag, std::string> &flags) {

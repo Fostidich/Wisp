@@ -15,6 +15,7 @@ void incompatibleFlagsError(const std::string& text);
 void noValueError(const std::string& text);
 void noOptionError(const std::string& text);
 void mandatoryFlagError(const std::string& text);
+
 void helpText();
 void formatText();
 void exampleText();
@@ -23,6 +24,12 @@ void randomKey(const std::string& text);
 bool askConfirmation(const std::string& text);
 void destroyOutcome(bool outcome);
 void showList(const std::vector<entry> &entries);
+
+void showFormat(std::string format);
+void newFormat(bool outcome, std::string newFormat);
+void showToken(std::string token);
+void newToken(bool outcome, std::string newToken);
+bool showGeneratedToken(std::string token);
 }
 
 #endif

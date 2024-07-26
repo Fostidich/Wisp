@@ -94,21 +94,36 @@ void entry::setAnnotation(const std::string newAnnotation) {
     annotation = newAnnotation;
 }
 
-std::string entry::toString(  // TODO use colors :)
+std::string entry::toString(
     int providerMaxLen, int usernameMaxLen, int updateMaxLen) const {
+    const std::string reset = "\033[0m";
+    const std::string yellow = "\033[33m";
+    const std::string purple = "\033[35m";
+    const std::string cyan = "\033[36m";
+    const std::string gray = "\033[90m";
+
     std::string s;
     struct winsize w;
     int width = ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0 ? w.ws_col : 100;
+    width += purple.size() + yellow.size() + cyan.size() - 3;
 
-    s += '[' + std::format("{:0{}}", date.year, 4) + '-' +
+    s += "[" + std::format("{:0{}}", date.year, 4) + '-' +
          std::format("{:0{}}", date.month, 2) + '-' +
          std::format("{:0{}}", date.day, 2) + ']';
-    s += ' ' + std::format("{:<{}}", provider, providerMaxLen);
-    s += ' ' + std::format("{:<{}}", username, usernameMaxLen);
-    s += ' ' + std::format("{:>{}}", update, updateMaxLen);
-    s += ' ' + format;
-    s += (format.empty() ? "" : " ") + annotation;
+    s += ' ' + purple + std::format("{:<{}}", provider, providerMaxLen);
+    s += ' ' + yellow + std::format("{:<{}}", username, usernameMaxLen);
+    s += ' ' + cyan + std::format("{:>{}}", update, updateMaxLen);
+
+    if (!format.empty()) {
+        s += ' ' + reset + format;
+        width += reset.size() - 1;
+    }
+    if (!annotation.empty()) {
+        s += ' ' + gray + annotation;
+        width += gray.size() - 1;
+    }
 
     if (s.size() > width) s.erase(width);
+    s += reset;
     return s;
 }
