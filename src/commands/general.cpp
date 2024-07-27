@@ -7,10 +7,6 @@
 #include <nlohmann/json.hpp>
 #include <string>
 
-const std::string dataFolder = "personal-data/";
-
-const std::string entriesFile = "entries.json";
-
 std::string commands::generateRandomKey() {
     std::string s;
     for (int i = 0; i < 3; i++) {

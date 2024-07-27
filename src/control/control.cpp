@@ -15,6 +15,8 @@ void control::execute(const request &request) {
     // Check and manage errors
     if (error != error::none) handlerError(error, unhandled);
 
+    // TODO check file integrity
+
     // Switch with the command value in the request to the right command handler
     switch (command) {
         case command::general:
@@ -82,10 +84,7 @@ void handlerGeneral(const std::map<enum flag, std::string> &flags) {
             ui::randomKey(commands::generateRandomKey());
             break;
         case flag::destroy:
-            ui::destroyOutcome(
-                ui::askConfirmation(
-                    "Do you really want to delete all personal data?") &&
-                commands::deleteData());
+            ui::destroyOutcome(ui::askConfirmation() && commands::deleteData());
             break;
         case flag::list:
             ui::showList(commands::retrieveEntries());
@@ -101,22 +100,24 @@ void handlerGlobal(const std::map<enum flag, std::string> &flags) {
             const std::string &v = flags.at(flag::format);
             if (v.empty())
                 ui::showFormat(commands::getFormat());
-            else if (bool outcome = commands::setFormat(v))
-                ui::newFormat(outcome, v);
+            else
+                ui::newFormat(commands::setFormat(v), v);
             break;
         }
         case flag::token: {
             const std::string &v = flags.at(flag::token);
             if (v.empty())
                 ui::showToken(commands::getToken());
-            else if (bool outcome = commands::setToken(v))
-                ui::newToken(outcome, v);
+            else
+                ui::newToken(commands::setToken(v), v);
             break;
         }
         case flag::generate: {
             std::string t = commands::generateToken();
-            if (bool outcome = ui::showGeneratedToken(t))
-                ui::newToken(outcome, t);
+            if (ui::showGeneratedToken(t))
+                ui::newToken(commands::setToken(t), t);
+            else
+                ui::newTokenAbort();
             break;
         }
         default:

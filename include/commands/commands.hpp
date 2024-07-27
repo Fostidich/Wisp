@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>
 
+const std::string dataFolder = "personal-data/";
+const std::string entriesFile = "entries.json";
+const std::string configFile = "config.ini";
+
 namespace commands {
 std::string generateRandomKey();
 bool deleteData();

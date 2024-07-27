@@ -1,7 +1,9 @@
 #include "ui/ui.hpp"
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
 
@@ -117,8 +119,8 @@ void ui::randomKey(const std::string &text) {
     std::cout << text << std::endl;
 }
 
-bool ui::askConfirmation(const std::string &text) {
-    std::cout << text << std::endl;
+bool ui::askConfirmation() {
+    std::cout << "Do you really want to delete all personal data?" << std::endl;
     std::cout << "Write \"CONFIRM\" to proceed: ";
     std::string confirm;
     getline(std::cin, confirm);
@@ -151,22 +153,48 @@ void ui::showList(const std::vector<entry> &entries) {
                   << std::endl;
 }
 
-void showFormat(std::string format) {
-
+void ui::showFormat(std::string format) {
+    std::cout << "Global hash format: " << format << std::endl;
 }
 
-void newFormat(bool outcome, std::string newFormat) {
-
+void ui::newFormat(bool outcome, std::string newFormat) {
+    if (outcome)
+        std::cout << "New global hash format set: " << newFormat << std::endl;
+    else
+        std::cout << "Unable to set new global hash format." << std::endl;
 }
 
-void showToken(std::string token) {
-
+void ui::showToken(std::string token) {
+    std::cout << "Global private token: " << token << std::endl;
 }
 
-void newToken(bool outcome, std::string newToken) {
-
+void ui::newToken(bool outcome, std::string newToken) {
+    if (outcome)
+        std::cout << "New global private token set: " << newToken << std::endl;
+    else
+        std::cout << "Unable to set new global private token." << std::endl;
 }
 
-bool showGeneratedToken(std::string token) {
+bool ui::showGeneratedToken(std::string token) {
+    std::cout << "Generated token: " << token << std::endl;
+    std::string choice;
+    const std::vector<std::string> yes = {"", "y", "Y", "yes", "YES", "Yes"};
+    const std::vector<std::string> no = {"n", "N", "no", "NO", "No"};
 
+    std::cout << "Would you like to set it as global private token? [y] / n ";
+    getline(std::cin, choice);
+
+    while (std::find(yes.begin(), yes.end(), choice) == yes.end() &&
+           std::find(no.begin(), no.end(), choice) == no.end()) {
+        std::cout << "Unknown answer." << std::endl;
+        std::cout
+            << "Would you like to set it as global private token? [y] / n ";
+        getline(std::cin, choice);
+    }
+
+    return std::find(yes.begin(), yes.end(), choice) != yes.end();
+}
+
+void ui::newTokenAbort() {
+    std::cout << "New token not set." << std::endl;
 }
