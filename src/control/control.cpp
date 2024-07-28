@@ -1,4 +1,5 @@
 #include "commands/commands.hpp"
+#include "commands/utils.hpp"
 #include "control/control.hpp"
 #include "control/enums.hpp"
 #include "ui/ui.hpp"
@@ -15,7 +16,8 @@ void control::execute(const request &request) {
     // Check and manage errors
     if (error != error::none) handlerError(error, unhandled);
 
-    // TODO check file integrity
+    // Create files if they haven't been already
+    if (!checkFilePresence()) return;
 
     // Switch with the command value in the request to the right command handler
     switch (command) {
@@ -32,6 +34,18 @@ void control::execute(const request &request) {
             handlerSet(flags);
             break;
     }
+}
+
+bool checkFilePresence() {
+    if (!touchFile(dataFolder, entriesFile)) {
+        ui::fileTouchError(dataFolder + entriesFile);
+        return false;
+    }
+    if (!touchFile(dataFolder, configFile)) {
+        ui::fileTouchError(dataFolder + configFile);
+        return false;
+    }
+    return true;
 }
 
 void handlerError(enum error error, const std::string &unhandled) {

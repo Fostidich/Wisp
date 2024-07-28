@@ -11,5 +11,8 @@ char getHiddenChar();
 /// If an error occurs, the returned string will be empty.
 std::string getExecutableDir();
 std::string getExecutablePath();
+/// Check file presence, otherwise it's created.'
+/// If file is directly in the executable folder, folder string must be empty.
+bool touchFile(std::string folder, std::string filename);
 
 #endif

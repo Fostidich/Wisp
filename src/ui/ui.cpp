@@ -3,46 +3,49 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-#include <vector>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
+
+void ui::fileTouchError(const std::string &filename) {
+    std::cerr << "Unable to touch \"" << filename << "\"." << std::endl;
+}
 
 void ui::noArgumentError() {
     std::cerr << "No argument provided. " << suggestHelp << std::endl;
 }
 
-void ui::unknownCommandError(const std::string &text) {
-    std::cerr << "Unknown command: \"" << text << "\". " << suggestHelp
+void ui::unknownCommandError(const std::string &command) {
+    std::cerr << "Unknown command: \"" << command << "\". " << suggestHelp
               << std::endl;
 }
 
-void ui::unknownFlagError(const std::string &text) {
-    std::cerr << "Unknown flag: \"" << text << "\". " << suggestHelp
+void ui::unknownFlagError(const std::string &flag) {
+    std::cerr << "Unknown flag: \"" << flag << "\". " << suggestHelp
               << std::endl;
 }
 
-void ui::doubleFlagError(const std::string &text) {
-    std::cerr << "Flag \"" << text << "\" cannot be repeated. " << suggestHelp
+void ui::doubleFlagError(const std::string &flag) {
+    std::cerr << "Flag \"" << flag << "\" cannot be repeated. " << suggestHelp
               << std::endl;
 }
 
-void ui::incompatibleFlagsError(const std::string &text) {
-    std::cerr << "Flag \"" << text << "\" cannot be used with priors. "
+void ui::incompatibleFlagsError(const std::string &flag) {
+    std::cerr << "Flag \"" << flag << "\" cannot be used with priors. "
               << suggestHelp << std::endl;
 }
 
-void ui::noValueError(const std::string &text) {
-    std::cerr << "Flag \"" << text << "\" requires a value. " << suggestHelp
+void ui::noValueError(const std::string &flag) {
+    std::cerr << "Flag \"" << flag << "\" requires a value. " << suggestHelp
               << std::endl;
 }
 
-void ui::noOptionError(const std::string &text) {
-    std::cerr << "Command \"" << text << "\" requires option flags. "
+void ui::noOptionError(const std::string &command) {
+    std::cerr << "Command \"" << command << "\" requires option flags. "
               << suggestHelp << std::endl;
 }
 
-void ui::mandatoryFlagError(const std::string &text) {
-    std::cerr << "Flag \"" << text << "\" is mandatory. " << suggestHelp
+void ui::mandatoryFlagError(const std::string &flag) {
+    std::cerr << "Flag \"" << flag << "\" is mandatory. " << suggestHelp
               << std::endl;
 }
 
@@ -111,12 +114,12 @@ void ui::exampleText() {  // TODO put description
     )" << std::endl;
 }
 
-void ui::versionText(const std::string &text) {
-    std::cout << "Wisp version: " << text << std::endl;
+void ui::versionText(const std::string &version) {
+    std::cout << "Wisp version: " << version << std::endl;
 }
 
-void ui::randomKey(const std::string &text) {
-    std::cout << text << std::endl;
+void ui::randomKey(const std::string &key) {
+    std::cout << key << std::endl;
 }
 
 bool ui::askConfirmation() {
@@ -128,9 +131,10 @@ bool ui::askConfirmation() {
 }
 
 void ui::destroyOutcome(bool outcome) {
-    const std::string toPrint =
-        outcome ? "All data successfully deleted." : "Unable to delete data.";
-    std::cout << toPrint << std::endl;
+    if (outcome)
+        std::cout << "All data successfully deleted." << std::endl;
+    else
+        std::cerr << "Unable to delete data." << std::endl;
 }
 
 void ui::showList(const std::vector<entry> &entries) {
@@ -161,7 +165,7 @@ void ui::newFormat(bool outcome, std::string newFormat) {
     if (outcome)
         std::cout << "New global hash format set: " << newFormat << std::endl;
     else
-        std::cout << "Unable to set new global hash format." << std::endl;
+        std::cerr << "Unable to set new global hash format." << std::endl;
 }
 
 void ui::showToken(std::string token) {
@@ -172,7 +176,7 @@ void ui::newToken(bool outcome, std::string newToken) {
     if (outcome)
         std::cout << "New global private token set: " << newToken << std::endl;
     else
-        std::cout << "Unable to set new global private token." << std::endl;
+        std::cerr << "Unable to set new global private token." << std::endl;
 }
 
 bool ui::showGeneratedToken(std::string token) {

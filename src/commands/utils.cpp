@@ -2,6 +2,8 @@
 
 #include <climits>
 #include <csignal>
+#include <filesystem>
+#include <fstream>
 #include <random>
 #include <termios.h>
 #include <unistd.h>
@@ -56,4 +58,22 @@ std::string getExecutablePath() {
         return buffer;
     }
     return "";
+}
+
+bool touchFile(std::string folder, std::string filename) {
+    std::string path = getExecutableDir();
+    if (path.empty()) return false;
+
+    path += folder;
+    if (!std::filesystem::exists(path) &&
+        !std::filesystem::create_directories(path))
+        return false;
+
+    path += filename;
+    if (!std::filesystem::exists(path)) {
+        std::ofstream file(path);
+        if (!file.is_open()) return false;
+    }
+
+    return true;
 }
