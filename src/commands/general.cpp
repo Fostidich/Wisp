@@ -1,5 +1,4 @@
 #include "commands/commands.hpp"
-#include "commands/utils.hpp"
 
 #include <exception>
 #include <filesystem>

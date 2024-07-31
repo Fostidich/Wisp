@@ -1,5 +1,4 @@
 #include "commands/commands.hpp"
-#include "commands/utils.hpp"
 #include "control/control.hpp"
 #include "control/enums.hpp"
 #include "ui/ui.hpp"
@@ -18,6 +17,7 @@ void control::execute(const request &request) {
 
     // Create files if they haven't been already
     if (!checkFilePresence()) return;
+    if (!checkConfigs()) return;
 
     // Switch with the command value in the request to the right command handler
     switch (command) {
@@ -43,6 +43,19 @@ bool checkFilePresence() {
     }
     if (!touchFile(dataFolder, configFile)) {
         ui::fileTouchError(dataFolder + configFile);
+        return false;
+    }
+    return true;
+}
+
+bool checkConfigs() {
+    if (commands::getToken().empty() &&
+        !commands::setToken(commands::generateToken())) {
+        ui::configsError();
+        return false;
+    }
+    if (commands::getFormat().empty() && !commands::setFormat(DEFAULT_FORMAT)) {
+        ui::configsError();
         return false;
     }
     return true;
@@ -140,7 +153,28 @@ void handlerGlobal(const std::map<enum flag, std::string> &flags) {
 }
 
 void handlerGet(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::provider)) ui::helpText();
+    entry e(flags);
+    commands::populateEntry(e);
+    std::string hash = commands::generateHash(e, ui::inputKey());
+
+    if (flags.contains(flag::clipboard))
+        if (commands::copyToClipboard(hash))
+            ui::hashCopiedToClipboard();
+        else
+            ui::hashNotCopiedToClipboard();
+    else
+        ui::hashGeneration(hash);
+
+    if (!commands::lookForEntry(e)) {
+        bool present;
+        if (ui::askForAddition())
+            if (commands::setEntry(entry(flags), present) && !present)
+                ui::entryCreated();
+            else
+                ui::entryNotCreated();
+        else
+            ui::entryNotAdded();
+    }
 }
 
 void handlerSet(const std::map<enum flag, std::string> &flags) {

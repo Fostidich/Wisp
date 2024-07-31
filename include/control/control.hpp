@@ -8,6 +8,7 @@ void execute(const request &request);
 }
 
 bool checkFilePresence();
+bool checkConfigs();
 void handlerError(enum error error, const std::string &unhandled);
 void handlerGeneral(const std::map<enum flag, std::string> &flags);
 void handlerGlobal(const std::map<enum flag, std::string> &flags);

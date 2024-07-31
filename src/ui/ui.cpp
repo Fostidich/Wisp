@@ -3,11 +3,19 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <termios.h>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
 
+const std::vector<std::string> yes = {"", "y", "Y", "yes", "YES", "Yes"};
+const std::vector<std::string> no = {"n", "N", "no", "NO", "No"};
+
 void ui::fileTouchError(const std::string &filename) {
     std::cerr << "Unable to touch \"" << filename << "\"." << std::endl;
+}
+
+void ui::configsError() {
+    std::cerr << "Unable to access the config file" << std::endl;
 }
 
 void ui::noArgumentError() {
@@ -104,13 +112,13 @@ void ui::exampleText() {  // TODO put description
     wisp --version
 
     wisp get -p website.com -u you@mail.com
-    wisp get -p website.com -u you@mail.com -h ab.bc.cd -u 2
+    wisp get -p website.com -u you@mail.com -f ab.bc.cd -n 2
 
     wisp set -p website.com -u you@mail.com -a "love this app"
-    wisp set -p website.com -u you@mail.com -h ab.bc.cd -u 2
+    wisp set -p website.com -u you@mail.com -f ab.bc.cd -n 2
 
-    wisp glob -h ab.ab.ab.ab.-.c.c.c.c
-    wisp glob --token -g
+    wisp glob -f ab.ab.ab.ab.-.c.c.c.c
+    wisp glob -g
     )" << std::endl;
 }
 
@@ -182,17 +190,15 @@ void ui::newToken(bool outcome, std::string newToken) {
 bool ui::showGeneratedToken(std::string token) {
     std::cout << "Generated token: " << token << std::endl;
     std::string choice;
-    const std::vector<std::string> yes = {"", "y", "Y", "yes", "YES", "Yes"};
-    const std::vector<std::string> no = {"n", "N", "no", "NO", "No"};
-
-    std::cout << "Would you like to set it as global private token? [y] / n ";
+    const std::string question =
+        "Would you like to set it as global private token? [y] / n ";
+    std::cout << question;
     getline(std::cin, choice);
 
     while (std::find(yes.begin(), yes.end(), choice) == yes.end() &&
            std::find(no.begin(), no.end(), choice) == no.end()) {
         std::cout << "Unknown answer." << std::endl;
-        std::cout
-            << "Would you like to set it as global private token? [y] / n ";
+        std::cout << question;
         getline(std::cin, choice);
     }
 
@@ -211,6 +217,14 @@ void ui::entryCreated() {
     std::cout << "New entry created." << std::endl;
 }
 
+void ui::entryNotCreated() {
+    std::cerr << "Unable to create new entry." << std::endl;
+}
+
+void ui::entryNotAdded() {
+    std::cout << "Entry not added." << std::endl;
+}
+
 void ui::entryNotUpdated() {
     std::cerr << "Unable to update entry." << std::endl;
 }
@@ -225,4 +239,67 @@ void ui::entryNotDeleted() {
 
 void ui::entryNotFound() {
     std::cout << "Entry not found." << std::endl;
+}
+
+bool ui::askForAddition() {
+    std::string choice;
+    const std::string question =
+        "Do you want to save this as a new entry? [y] / n ";
+    std::cout << question;
+    getline(std::cin, choice);
+
+    while (std::find(yes.begin(), yes.end(), choice) == yes.end() &&
+           std::find(no.begin(), no.end(), choice) == no.end()) {
+        std::cout << "Unknown answer." << std::endl;
+        std::cout << question;
+        getline(std::cin, choice);
+    }
+
+    return std::find(yes.begin(), yes.end(), choice) != yes.end();
+}
+
+std::string ui::inputKey() {
+    std::string key;
+    while (true) {
+        std::cout << "Enter personal key: ";
+        char ch;
+        while ((ch = getHiddenChar()) != '\n') {
+            key += ch;
+            std::cout << "";
+        }
+        std::cout << std::endl;
+        if (key.empty())
+            std::cout << "No key inserted, try again" << std::endl;
+        else
+            break;
+    }
+    return key;
+}
+
+void ui::hashGeneration(const std::string &hash) {
+    std::cout << hash << std::endl;
+}
+
+void ui::hashCopiedToClipboard() {
+    std::cout << "Copied to clipboard." << std::endl;
+}
+
+void ui::hashNotCopiedToClipboard() {
+    std::cerr << "Unable to copy to clipboard." << std::endl;
+    std::cerr << "Copying to cliboard requires \"xclip\"." << std::endl;
+    std::cerr << "It can be installed with \"sudo apt install xclip\"."
+              << std::endl;
+}
+
+char getHiddenChar() {
+    struct termios oldT {
+    }, newT{};
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldT);
+    newT = oldT;
+    newT.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newT);
+    ch = static_cast<char>(getchar());
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldT);
+    return ch;
 }

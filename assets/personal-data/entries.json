@@ -2,11 +2,12 @@
     {
         "annotation": "goku",
         "date": {
-            "day": 10,
-            "month": 1,
+            "day": 31,
+            "month": 7,
             "year": 2024
         },
         "provider": "google",
+        "update": 1,
         "username": "kello"
     },
     {
@@ -79,11 +80,13 @@
     {
         "annotation": "vegeta",
         "date": {
-            "day": 10,
-            "month": 1,
+            "day": 31,
+            "month": 7,
             "year": 2024
         },
+        "format": "a.b.a.b",
         "provider": "google",
+        "update": 2,
         "username": "lolly"
     },
     {
@@ -141,5 +144,15 @@
         "provider": "clash",
         "update": 7,
         "username": "kello"
+    },
+    {
+        "date": {
+            "day": 31,
+            "month": 7,
+            "year": 2024
+        },
+        "format": "a.a",
+        "provider": "aws",
+        "username": "paolo"
     }
 ]

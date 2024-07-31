@@ -1,11 +1,7 @@
 #include "commands/commands.hpp"
-#include "commands/utils.hpp"
 
 #include <exception>
 #include <mINI/ini.h>
-
-#define TOKEN_LEN 48
-#define DEFAULT_FORMAT "b.ab.ab.a.-.c.c.c.c"
 
 std::string commands::getFormat() {
     try {
@@ -18,9 +14,7 @@ std::string commands::getFormat() {
         if (!file.read(ini)) return "";
         if (ini["globals"]["format"].empty()) return "";
         return ini["globals"]["format"];
-    } catch (const std::exception &_) {
-        return "";
-    }
+    } catch (const std::exception &_) { return ""; }
 }
 
 bool commands::setFormat(std::string newFormat) {
@@ -34,9 +28,7 @@ bool commands::setFormat(std::string newFormat) {
         if (!file.read(ini)) return false;
         ini["globals"]["format"] = newFormat;
         return file.write(ini);
-    } catch (const std::exception &_) {
-        return false;
-    }
+    } catch (const std::exception &_) { return false; }
 }
 
 std::string commands::getToken() {
@@ -50,9 +42,7 @@ std::string commands::getToken() {
         if (!file.read(ini)) return "";
         if (ini["globals"]["token"].empty()) return "";
         return ini["globals"]["token"];
-    } catch (const std::exception &_) {
-        return "";
-    }
+    } catch (const std::exception &_) { return ""; }
 }
 
 bool commands::setToken(std::string newToken) {
@@ -66,9 +56,7 @@ bool commands::setToken(std::string newToken) {
         if (!file.read(ini)) return false;
         ini["globals"]["token"] = newToken;
         return file.write(ini);
-    } catch (const std::exception &_) {
-        return false;
-    }
+    } catch (const std::exception &_) { return false; }
 }
 
 std::string commands::generateToken() {

@@ -8,6 +8,7 @@
 
 namespace ui {
 void fileTouchError(const std::string &filename);
+void configsError();
 void noArgumentError();
 void unknownCommandError(const std::string& command);
 void unknownFlagError(const std::string& flag);
@@ -35,10 +36,21 @@ void newTokenAbort();
 
 void entryUpdated();
 void entryCreated();
+void entryNotCreated();
+void entryNotAdded();
 void entryNotUpdated();
 void entryDeleted();
 void entryNotDeleted();
 void entryNotFound();
+
+bool askForAddition();
+std::string inputKey();
+
+void hashGeneration(const std::string & hash);
+void hashCopiedToClipboard();
+void hashNotCopiedToClipboard();
 }
+
+char getHiddenChar();
 
 #endif
