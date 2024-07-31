@@ -1,7 +1,7 @@
 #include "commands/commands.hpp"
 
-bool commands::setEntry(const entry &toSet) {
-    bool found = false;
+bool commands::setEntry(const entry &toSet, bool &present) {
+    present = false;
     auto entries = commands::retrieveEntries();
 
     // Look for the entry
@@ -15,18 +15,34 @@ bool commands::setEntry(const entry &toSet) {
             if (!f.empty()) e.setFormat(f);
             if (n > 0) e.setUpdate(n);
             if (!a.empty()) e.setAnnotation(a);
-            found = true;
+
+            present = true;
             break;
         }
     }
 
     // Add a new entry
-    if (!found) entries.push_back(toSet);
+    if (!present) entries.push_back(toSet);
 
     return commands::dumpEntries(entries);
 }
 
-bool commands::deleteEntry(const entry &toDelete) {
-    return true;
-    // TODO
+bool commands::deleteEntry(const entry &toDelete, bool &present) {
+    present = false;
+    auto entries = commands::retrieveEntries();
+
+    // Look for the entry
+    auto it = std::find_if(
+        entries.begin(), entries.end(), [&toDelete](const entry &e) {
+            return e.getProvider() == toDelete.getProvider() &&
+                   e.getUsername() == toDelete.getUsername();
+        });
+
+    if (it == entries.end()) return false;
+
+    // Erase the found entry
+    entries.erase(it);
+    present = true;
+
+    return commands::dumpEntries(entries);
 }

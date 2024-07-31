@@ -25,8 +25,8 @@ std::string getToken();
 bool setToken(std::string newToken);
 std::string generateToken();
 
-bool setEntry(const entry &toSet);
-bool deleteEntry(const entry &toDelete);
+bool setEntry(const entry &toSet, bool &present);
+bool deleteEntry(const entry &toDelete, bool &present);
 }
 
 #endif

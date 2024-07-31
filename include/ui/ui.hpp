@@ -34,9 +34,11 @@ bool showGeneratedToken(std::string token);
 void newTokenAbort();
 
 void entryUpdated();
+void entryCreated();
 void entryNotUpdated();
 void entryDeleted();
 void entryNotDeleted();
+void entryNotFound();
 }
 
 #endif

@@ -145,14 +145,15 @@ void handlerGet(const std::map<enum flag, std::string> &flags) {
 
 void handlerSet(const std::map<enum flag, std::string> &flags) {
     entry e(flags);
+    bool present;
     if (flags.contains(flag::remove)) {
-        if (commands::deleteEntry(e))
+        if (commands::deleteEntry(e, present))
             ui::entryDeleted();
         else
-            ui::entryNotDeleted();
+            present ? ui::entryNotDeleted() : ui::entryNotFound();
     } else {
-        if (commands::setEntry(e))
-            ui::entryUpdated();
+        if (commands::setEntry(e, present))
+            present ? ui::entryUpdated() : ui::entryCreated();
         else
             ui::entryNotUpdated();
     }

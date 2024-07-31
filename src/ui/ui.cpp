@@ -207,6 +207,10 @@ void ui::entryUpdated() {
     std::cout << "Entry has been updated." << std::endl;
 }
 
+void ui::entryCreated() {
+    std::cout << "New entry created." << std::endl;
+}
+
 void ui::entryNotUpdated() {
     std::cerr << "Unable to update entry." << std::endl;
 }
@@ -216,5 +220,9 @@ void ui::entryDeleted() {
 }
 
 void ui::entryNotDeleted() {
-    std::cerr << "Unable to delete entry" << std::endl;
+    std::cerr << "Unable to delete entry." << std::endl;
+}
+
+void ui::entryNotFound() {
+    std::cout << "Entry not found." << std::endl;
 }
