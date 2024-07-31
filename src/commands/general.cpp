@@ -3,8 +3,6 @@
 
 #include <exception>
 #include <filesystem>
-#include <fstream>
-#include <nlohmann/json.hpp>
 
 std::string commands::generateRandomKey() {
     std::string s;
@@ -30,33 +28,4 @@ bool commands::deleteData() {
         return false;
     }
     return true;
-}
-
-std::vector<entry> commands::retrieveEntries() {
-    std::vector<entry> entries;
-    try {
-        std::string path = getExecutableDir();
-        if (path.empty()) return entries;
-        path += dataFolder + entriesFile;
-
-        std::ifstream file(path);
-        if (!file.is_open()) return entries;
-        nlohmann::json jsonData;
-        file >> jsonData;
-        if (file.fail() || !jsonData.is_array()) return entries;
-        file.close();
-
-        for (const auto &j : jsonData) {
-            // Discard invalid entries
-            if (!j.contains("provider") || !j.contains("username") ||
-                !j["provider"].is_string() || !j["username"].is_string())
-                continue;
-
-            // Add new entry to the vector
-            entry e(j);
-            entries.push_back(e);
-        }
-    } catch (const std::exception &_) {
-    }
-    return entries;
 }

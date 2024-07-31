@@ -202,3 +202,19 @@ bool ui::showGeneratedToken(std::string token) {
 void ui::newTokenAbort() {
     std::cout << "New token not set." << std::endl;
 }
+
+void ui::entryUpdated() {
+    std::cout << "Entry has been updated." << std::endl;
+}
+
+void ui::entryNotUpdated() {
+    std::cerr << "Unable to update entry." << std::endl;
+}
+
+void ui::entryDeleted() {
+    std::cout << "Entry has been deleted." << std::endl;
+}
+
+void ui::entryNotDeleted() {
+    std::cerr << "Unable to delete entry" << std::endl;
+}

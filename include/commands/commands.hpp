@@ -13,7 +13,9 @@ const std::string configFile = "config.ini";
 namespace commands {
 std::string generateRandomKey();
 bool deleteData();
+
 std::vector<entry> retrieveEntries();
+bool dumpEntries(const std::vector<entry> &entries);
 
 /// An empty string is returned if a problem arises during file reading
 std::string getFormat();
@@ -22,6 +24,9 @@ bool setFormat(std::string newFormat);
 std::string getToken();
 bool setToken(std::string newToken);
 std::string generateToken();
+
+bool setEntry(const entry &toSet);
+bool deleteEntry(const entry &toDelete);
 }
 
 #endif

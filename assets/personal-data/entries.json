@@ -107,5 +107,29 @@
     "provider": "gemini",
     "update": 67,
     "username": "king"
+  },
+  {
+    "annotation": "oh yes",
+    "date": {
+      "day": 31,
+      "month": 7,
+      "year": 2024
+    },
+    "format": "b.a.b",
+    "provider": "youtube",
+    "update": 19,
+    "username": "kelloyoutube"
+  },
+  {
+    "annotation": "iLovePizza",
+    "date": {
+      "day": 31,
+      "month": 7,
+      "year": 2024
+    },
+    "format": "a.b.c.d",
+    "provider": "youtube",
+    "update": 9,
+    "username": "lollino"
   }
 ]

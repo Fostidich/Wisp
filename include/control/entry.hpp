@@ -1,6 +1,8 @@
 #ifndef ENTRY_HPP
 #define ENTRY_HPP
 
+#include "control/enums.hpp"
+
 #include <nlohmann/json.hpp>
 #include <string>
 
@@ -18,11 +20,14 @@ class entry {
     entry(std::string provider, std::string username);
     /// Entry is initialized with today's date
     entry(nlohmann::basic_json<> entry);
+    /// Entry is initialized with today's date
+    entry(const std::map<enum flag, std::string> &flags);
 
     const std::string &getProvider() const;
     const std::string &getUsername() const;
     const std::string &getFormat() const;
     int getUpdate() const;
+    const std::string &getAnnotation() const;
     const struct date &getDate() const;
 
     void setFormat(const std::string newFormat);
@@ -32,6 +37,7 @@ class entry {
 
     std::string toString(
         int providerMaxLen, int usernameMaxLen, int updateMaxLen) const;
+    nlohmann::json toJson() const;
 
   private:
     std::string provider;

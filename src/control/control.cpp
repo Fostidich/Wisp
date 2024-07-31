@@ -144,5 +144,16 @@ void handlerGet(const std::map<enum flag, std::string> &flags) {
 }
 
 void handlerSet(const std::map<enum flag, std::string> &flags) {
-    if (flags.contains(flag::username)) ui::helpText();
+    entry e(flags);
+    if (flags.contains(flag::remove)) {
+        if (commands::deleteEntry(e))
+            ui::entryDeleted();
+        else
+            ui::entryNotDeleted();
+    } else {
+        if (commands::setEntry(e))
+            ui::entryUpdated();
+        else
+            ui::entryNotUpdated();
+    }
 }

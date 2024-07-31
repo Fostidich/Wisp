@@ -56,9 +56,19 @@ entry::entry(nlohmann::basic_json<> entry) {
                 date.day = d["day"];
             if (!isDateValid(date)) date = today();
         }
-    } catch (const std::exception &e) {
-        throw;
-    }
+    } catch (const std::exception &e) { throw; }
+}
+
+entry::entry(const std::map<enum flag, std::string> &flags) {
+    if (flags.contains(flag::provider)) provider = flags.at(flag::provider);
+    if (flags.contains(flag::username)) username = flags.at(flag::username);
+    if (flags.contains(flag::format)) format = flags.at(flag::format);
+    if (flags.contains(flag::update)) try {
+            update = stoi(flags.at(flag::update));
+        } catch (const std::exception &_) {}
+    if (flags.contains(flag::annotation))
+        annotation = flags.at(flag::annotation);
+    date = today();
 }
 
 const std::string &entry::getProvider() const {
@@ -75,6 +85,10 @@ const std::string &entry::getFormat() const {
 
 int entry::getUpdate() const {
     return update;
+}
+
+const std::string &entry::getAnnotation() const {
+    return annotation;
 }
 
 const struct date &entry::getDate() const {
@@ -126,4 +140,14 @@ std::string entry::toString(
     if (s.size() > width) s.erase(width);
     s += reset;
     return s;
+}
+
+nlohmann::json entry::toJson() const {
+    nlohmann::json j = {{"date", {{"year", date.year}, {"month", date.month},
+                                     {"day", date.day}}},
+        {"provider", provider}, {"username", username}};
+    if (!format.empty()) j += {"format", format};
+    if (update > 0) j += {"update", update};
+    if (!annotation.empty()) j += {"annotation", annotation};
+    return j;
 }
