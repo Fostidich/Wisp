@@ -101,9 +101,6 @@ void handlerGeneral(const std::map<enum flag, std::string> &flags) {
         case flag::format:
             ui::formatText();
             break;
-        case flag::example:
-            ui::exampleText();
-            break;
         case flag::version:
             ui::versionText(VERSION);
             break;

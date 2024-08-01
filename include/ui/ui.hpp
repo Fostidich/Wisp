@@ -20,7 +20,6 @@ void mandatoryFlagError(const std::string& flag);
 
 void helpText();
 void formatText();
-void exampleText();
 void versionText(const std::string& version);
 void randomKey(const std::string& key);
 bool askConfirmation();

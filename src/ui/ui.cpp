@@ -62,7 +62,6 @@ void ui::helpText() {
     wisp - General actions:
         -h, --help                      Show help panel
         -f, --format                    Show format details
-        -e, --example                   Show usage examples
         -v, --version                   Print version
         -r, --random                    Print a random key
         -d, --destroy                   Immediately destroy all saved information
@@ -90,35 +89,26 @@ void ui::helpText() {
     )" << std::endl;
 }
 
-void ui::formatText() {  // TODO put description
+void ui::formatText() {
     std::cout << R"(
-    .   character separator
-    -   the hyphen itself
-    a   lowercase letter
-    b   uppercase letter
-    c   one-digit number
-    d   special character
+        Symbols:
+          .  - Section Separator
+          -  - Literal Hyphen
+          a  - Lowercase Letter (a-z)
+          b  - Uppercase Letter (A-Z)
+          c  - One-Digit Number (0-9)
+          d  - Special Character (e.g., !@#$%^&*)
 
-    Examples of hash formats:
-        a.a.b.b.c.c.d.d
-        ab.ab.ab.ab.-.c.c.c.c
-        abcd.abcd.abcd.abcd
-    )" << std::endl;
-}
+        Rules:
+          - Sections are separated by dots ('.').
+          - A hyphen ('-') must be alone within a section and surrounded by dots.
+          - Sections cannot be empty or contain invalid characters.
+          - Format cannot start or end with a dot or contain consecutive dots.
 
-void ui::exampleText() {  // TODO put description
-    std::cout << R"(
-    wisp --help
-    wisp --version
-
-    wisp get -p website.com -u you@mail.com
-    wisp get -p website.com -u you@mail.com -f ab.bc.cd -n 2
-
-    wisp set -p website.com -u you@mail.com -a "love this app"
-    wisp set -p website.com -u you@mail.com -f ab.bc.cd -n 2
-
-    wisp glob -f ab.ab.ab.ab.-.c.c.c.c
-    wisp glob -g
+        Examples:
+          1. a.a.b.b.c.c.d.d
+          2. ab.ab.ab.ab.-.c.c.c.c
+          3. abcd.abcd.abcd.abcd
     )" << std::endl;
 }
 

@@ -6,9 +6,7 @@
 std::string commands::generateRandomKey() {
     std::string s;
     for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 5; j++) {
-            s += randomChar();
-        }
+        for (int j = 0; j < 5; j++) { s += randomChar(); }
         if (i != 2) s += '-';
     }
     return s;
@@ -23,8 +21,6 @@ bool commands::deleteData() {
             std::filesystem::remove_all(path);
         else
             return false;
-    } catch (const std::exception &_) {
-        return false;
-    }
+    } catch (const std::exception &_) { return false; }
     return true;
 }

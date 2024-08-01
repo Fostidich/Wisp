@@ -68,7 +68,7 @@ std::string commands::generateHash(const entry &seed, const std::string &key) {
 }
 
 bool checkFormatValidity(const std::string &format) {
-    // TODO check format during input phase, not here
+    // TODO check format also during input phase, not only here
     const std::vector<char> validChars = {'a', 'b', 'c', 'd', '.', '-'};
     if (format.back() == '.') return false;
     char temp = '.';

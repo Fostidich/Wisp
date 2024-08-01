@@ -6,7 +6,6 @@ enum class command { general, global, get, set };
 enum class flag {
     help,
     format,
-    example,
     version,
     random,
     destroy,

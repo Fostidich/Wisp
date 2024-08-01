@@ -43,7 +43,8 @@ bool request::checkArgumentsIntegrity(int start, std::string &lastFlag,
     return true;
 }
 
-bool request::checkAtLeastOneFlag(int start, const std::vector<std::string> &args) {
+bool request::checkAtLeastOneFlag(
+    int start, const std::vector<std::string> &args) {
     // Check the presence of at least one flag
     if (args.size() == start) {
         error = error::noOption;
@@ -53,7 +54,8 @@ bool request::checkAtLeastOneFlag(int start, const std::vector<std::string> &arg
     return true;
 }
 
-bool request::checkInternalUnknownCommand(int start, const std::vector<std::string> &args) {
+bool request::checkInternalUnknownCommand(
+    int start, const std::vector<std::string> &args) {
     // Check that between two values there is always a flag
     for (int temp = start - 1, i = start; i < args.size(); i++) {
         if (args[i][0] != '-') {
@@ -68,8 +70,9 @@ bool request::checkInternalUnknownCommand(int start, const std::vector<std::stri
     return true;
 }
 
-bool request::checkFlagRecognition(std::string &lastFlag, const std::vector<std::string> &args,
-    const std::vector<std::string> &vLong, const std::vector<std::string> &vShort) {
+bool request::checkFlagRecognition(std::string &lastFlag,
+    const std::vector<std::string> &args, const std::vector<std::string> &vLong,
+    const std::vector<std::string> &vShort) {
     // Check that all flags are recognised
     for (const auto &arg : args) {
         if (arg[0] == '-') {
@@ -101,8 +104,9 @@ bool request::checkFlagRecognition(std::string &lastFlag, const std::vector<std:
     return true;
 }
 
-bool request::findFlagValue(enum flag flag, const std::string &v1, const std::string &v2,
-    bool hasValue, const std::vector<std::string> &args) {
+bool request::findFlagValue(enum flag flag, const std::string &v1,
+    const std::string &v2, bool hasValue,
+    const std::vector<std::string> &args) {
     bool found = false;
     for (int i = 1; i < args.size(); i++) {
         if (args[i].compare(v2) == 0 || args[i].compare(v1) == 0) {
@@ -127,7 +131,8 @@ bool request::findFlagValue(enum flag flag, const std::string &v1, const std::st
                 return false;
             }
 
-            // If value presence/repetition checks are passed, put the value into flags map
+            // If value presence/repetition checks are passed, put the value
+            // into flags map
             if (hasValue)
                 flags[flag] = args[i + 1];
             else
@@ -142,10 +147,11 @@ void request::builderGeneral(const std::vector<std::string> &args) {
     command = command::general;
 
     const std::vector<std::string> vLong = {
-        "--help", "--format", "--example", "--version", "--random", "--destroy", "--list"};
-    const std::vector<std::string> vShort = {"-h", "-f", "-e", "-v", "-r", "-d", "-l"};
-    const std::vector<enum flag> vFlag = {flag::help, flag::format, flag::example, flag::version,
-        flag::random, flag::destroy, flag::list};
+        "--help", "--format", "--version", "--random", "--destroy", "--list"};
+    const std::vector<std::string> vShort = {
+        "-h", "-f", "-v", "-r", "-d", "-l"};
+    const std::vector<enum flag> vFlag = {flag::help, flag::format,
+        flag::version, flag::random, flag::destroy, flag::list};
 
     std::string lastFlag;
     if (!checkArgumentsIntegrity(1, lastFlag, args, vLong, vShort)) return;
@@ -165,9 +171,11 @@ void request::builderGeneral(const std::vector<std::string> &args) {
 void request::builderGlobal(const std::vector<std::string> &args) {
     command = command::global;
 
-    const std::vector<std::string> vLong = {"--format", "--token", "--generate"};
+    const std::vector<std::string> vLong = {
+        "--format", "--token", "--generate"};
     const std::vector<std::string> vShort = {"-f", "-t", "-g"};
-    const std::vector<enum flag> vFlag = {flag::format, flag::token, flag::generate};
+    const std::vector<enum flag> vFlag = {
+        flag::format, flag::token, flag::generate};
 
     std::string lastFlag;
     if (!checkArgumentsIntegrity(2, lastFlag, args, vLong, vShort)) return;
@@ -176,8 +184,10 @@ void request::builderGlobal(const std::vector<std::string> &args) {
     auto args2 = args;
     for (int i = 0; i < args2.size(); i++) {
         if ((args2.size() == i + 1 || args2[i + 1][0] == '-') &&
-            (args2[i].compare(vShort[0]) == 0 || args2[i].compare(vShort[1]) == 0 ||
-                args2[i].compare(vLong[0]) == 0 || args2[i].compare(vLong[1]) == 0))
+            (args2[i].compare(vShort[0]) == 0 ||
+                args2[i].compare(vShort[1]) == 0 ||
+                args2[i].compare(vLong[0]) == 0 ||
+                args2[i].compare(vLong[1]) == 0))
             args2.insert(args2.begin() + i + 1, "");
         i++;
     }
@@ -202,8 +212,8 @@ void request::builderGet(const std::vector<std::string> &args) {
     const std::vector<std::string> vLong = {
         "--provider", "--username", "--format", "--update", "--clipboard"};
     const std::vector<std::string> vShort = {"-p", "-u", "-f", "-n", "-c"};
-    const std::vector<enum flag> vFlag = {
-        flag::provider, flag::username, flag::format, flag::update, flag::clipboard};
+    const std::vector<enum flag> vFlag = {flag::provider, flag::username,
+        flag::format, flag::update, flag::clipboard};
 
     std::string lastFlag;
     if (!checkArgumentsIntegrity(2, lastFlag, args, vLong, vShort)) return;
@@ -230,11 +240,12 @@ void request::builderGet(const std::vector<std::string> &args) {
 void request::builderSet(const std::vector<std::string> &args) {
     command = command::set;
 
-    const std::vector<std::string> vLong = {
-        "--provider", "--username", "--format", "--update", "--annotation", "--remove"};
-    const std::vector<std::string> vShort = {"-p", "-u", "-f", "-n", "-a", "-r"};
-    const std::vector<enum flag> vFlag = {
-        flag::provider, flag::username, flag::format, flag::update, flag::annotation, flag::remove};
+    const std::vector<std::string> vLong = {"--provider", "--username",
+        "--format", "--update", "--annotation", "--remove"};
+    const std::vector<std::string> vShort = {
+        "-p", "-u", "-f", "-n", "-a", "-r"};
+    const std::vector<enum flag> vFlag = {flag::provider, flag::username,
+        flag::format, flag::update, flag::annotation, flag::remove};
 
     std::string lastFlag;
     if (!checkArgumentsIntegrity(2, lastFlag, args, vLong, vShort)) return;
