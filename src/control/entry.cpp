@@ -71,15 +71,15 @@ entry::entry(const std::map<enum flag, std::string> &flags) {
     date = today();
 }
 
-const std::string &entry::getProvider() const {
+std::string entry::getProvider() const {
     return provider;
 }
 
-const std::string &entry::getUsername() const {
+std::string entry::getUsername() const {
     return username;
 }
 
-const std::string &entry::getFormat() const {
+std::string entry::getFormat() const {
     return format;
 }
 
@@ -87,11 +87,11 @@ int entry::getUpdate() const {
     return update;
 }
 
-const std::string &entry::getAnnotation() const {
+std::string entry::getAnnotation() const {
     return annotation;
 }
 
-const struct date &entry::getDate() const {
+struct date entry::getDate() const {
     return date;
 }
 

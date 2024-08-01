@@ -18,7 +18,7 @@ request::request(const std::vector<std::string> &args) : flags() {
     }
 }
 
-const std::map<enum flag, std::string> &request::getFlags() const {
+std::map<enum flag, std::string> request::getFlags() const {
     return flags;
 }
 
@@ -30,7 +30,7 @@ enum error request::getError() const {
     return error;
 }
 
-const std::string &request::getUnhandled() const {
+std::string request::getUnhandled() const {
     return unhandled;
 }
 

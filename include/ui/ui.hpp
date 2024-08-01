@@ -7,6 +7,7 @@
 #include <vector>
 
 namespace ui {
+void invalidFormatError();
 void fileTouchError(const std::string& filename);
 void configsError();
 void noArgumentError();

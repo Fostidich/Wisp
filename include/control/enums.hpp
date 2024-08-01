@@ -29,7 +29,10 @@ enum class error {
     incompatibleFlags,
     noValue,
     noOption,
-    mandatoryFlag
+    mandatoryFlag,
+    invalidFormat,
+    untouchableFiles,
+    invalidConfigs
 };
 
 #endif

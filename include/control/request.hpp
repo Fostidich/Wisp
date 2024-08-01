@@ -11,10 +11,10 @@ class request {
   public:
     request(const std::vector<std::string>& args);
 
-    const std::map<enum flag, std::string>& getFlags() const;
+    std::map<enum flag, std::string> getFlags() const;
     enum command getCommand() const;
     enum error getError() const;
-    const std::string& getUnhandled() const;
+    std::string getUnhandled() const;
 
   private:
     std::map<enum flag, std::string> flags;

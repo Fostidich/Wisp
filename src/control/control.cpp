@@ -15,9 +15,14 @@ void control::execute(const request &request) {
     // Check and manage errors
     if (error != error::none) handlerError(error, unhandled);
 
+    // Check format validty
+    if (flags.contains(flag::format)) checkFormat(flags.at(flag::format));
+
     // Create files if they haven't been already
-    if (!checkFilePresence()) return;
-    if (!checkConfigs()) return;
+    checkFilePresence();
+
+    // Check config data validity and presence
+    checkConfigs();
 
     // Switch with the command value in the request to the right command handler
     switch (command) {
@@ -36,29 +41,35 @@ void control::execute(const request &request) {
     }
 }
 
-bool checkFilePresence() {
+void checkFormat(const std::string &format) {
+    if (commands::checkFormatValidity(format)) return;
+    ui::invalidFormatError();
+    exit(static_cast<int>(error::invalidFormat));
+}
+
+void checkFilePresence() {
     if (!touchFile(dataFolder, entriesFile)) {
         ui::fileTouchError(dataFolder + entriesFile);
-        return false;
+        exit(static_cast<int>(error::untouchableFiles));
     }
     if (!touchFile(dataFolder, configFile)) {
         ui::fileTouchError(dataFolder + configFile);
-        return false;
+        exit(static_cast<int>(error::untouchableFiles));
     }
-    return true;
 }
 
-bool checkConfigs() {
+void checkConfigs() {
     if (commands::getToken().empty() &&
         !commands::setToken(commands::generateToken())) {
         ui::configsError();
-        return false;
+        exit(static_cast<int>(error::invalidConfigs));
     }
-    if (commands::getFormat().empty() && !commands::setFormat(DEFAULT_FORMAT)) {
+    std::string format = commands::getFormat();
+    if ((format.empty() || !commands::checkFormatValidity(format)) &&
+        !commands::setFormat(DEFAULT_FORMAT)) {
         ui::configsError();
-        return false;
+        exit(static_cast<int>(error::invalidConfigs));
     }
-    return true;
 }
 
 void handlerError(enum error error, const std::string &unhandled) {

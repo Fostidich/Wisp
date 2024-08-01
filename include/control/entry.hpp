@@ -23,12 +23,12 @@ class entry {
     /// Entry is initialized with today's date
     entry(const std::map<enum flag, std::string> &flags);
 
-    const std::string &getProvider() const;
-    const std::string &getUsername() const;
-    const std::string &getFormat() const;
+    std::string getProvider() const;
+    std::string getUsername() const;
+    std::string getFormat() const;
     int getUpdate() const;
-    const std::string &getAnnotation() const;
-    const struct date &getDate() const;
+    std::string getAnnotation() const;
+    struct date getDate() const;
 
     void setFormat(const std::string &newFormat);
     /// Setting a new update will also update the date with today's date

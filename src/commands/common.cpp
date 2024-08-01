@@ -61,6 +61,29 @@ char randomChar() {
         return char('a' + rand - 36);
 }
 
+bool commands::checkFormatValidity(const std::string &format) {
+    const std::vector<char> validChars = {'a', 'b', 'c', 'd', '.', '-'};
+    if (format.back() == '.') return false;
+    char temp = '.';
+    for (int i = 0; i < format.size(); i++) {
+        // Check char validity
+        if (std::find(validChars.begin(), validChars.end(), format[i]) ==
+            validChars.end())
+            return false;
+
+        // Check that no double dot can be found
+        if (format[i] == '.' && temp == '.') return false;
+
+        // Check that hyphen is always alone
+        if (format[i] == '-' &&
+            (temp != '.' || (i + 1 < format.size() && format[i + 1] != '.')))
+            return false;
+
+        temp = format[i];
+    }
+    return true;
+}
+
 std::vector<entry> commands::retrieveEntries() {
     std::vector<entry> entries;
     try {

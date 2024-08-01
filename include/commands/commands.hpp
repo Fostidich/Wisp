@@ -15,6 +15,8 @@ const std::string entriesFile = "entries.json";
 const std::string configFile = "config.ini";
 
 namespace commands {
+bool checkFormatValidity(const std::string &format);
+
 std::string generateRandomKey();
 bool deleteData();
 
@@ -49,7 +51,6 @@ std::string getExecutablePath();
 bool touchFile(const std::string &folder, const std::string &filename);
 
 char randomChar();
-bool checkFormatValidity(const std::string &format);
 std::vector<unsigned char> getSHA256(const std::string &input);
 void shiftRight(std::vector<unsigned char> &v, int times);
 std::vector<unsigned char> obtainPlot(const std::string &provider,

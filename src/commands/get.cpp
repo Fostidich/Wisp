@@ -47,7 +47,7 @@ std::string commands::generateHash(const entry &seed, const std::string &key) {
     std::string username = seed.getUsername();
     std::string format = seed.getFormat();
     int update = seed.getUpdate();
-    if (!checkFormatValidity(format)) format = DEFAULT_FORMAT;
+    if (!commands::checkFormatValidity(format)) format = DEFAULT_FORMAT;
 
     // Compress data to plot
     auto plot = obtainPlot(provider, username, key, token, update);
@@ -65,30 +65,6 @@ std::string commands::generateHash(const entry &seed, const std::string &key) {
     }
 
     return result;
-}
-
-bool checkFormatValidity(const std::string &format) {
-    // TODO check format also during input phase, not only here
-    const std::vector<char> validChars = {'a', 'b', 'c', 'd', '.', '-'};
-    if (format.back() == '.') return false;
-    char temp = '.';
-    for (int i = 0; i < format.size(); i++) {
-        // Check char validity
-        if (std::find(validChars.begin(), validChars.end(), format[i]) ==
-            validChars.end())
-            return false;
-
-        // Check that no double dot can be found
-        if (format[i] == '.' && temp == '.') return false;
-
-        // Check that hyphen is always alone
-        if (format[i] == '-' &&
-            (temp != '.' || (i + 1 < format.size() && format[i + 1] != '.')))
-            return false;
-
-        temp = format[i];
-    }
-    return true;
 }
 
 std::vector<unsigned char> getSHA256(const std::string &input) {

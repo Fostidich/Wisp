@@ -6,9 +6,14 @@
 #include <termios.h>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
+const std::string suggestFormat = "Use \"wisp --format\" for format rules.";
 
 const std::vector<std::string> yes = {"", "y", "Y", "yes", "YES", "Yes"};
 const std::vector<std::string> no = {"n", "N", "no", "NO", "No"};
+
+void ui::invalidFormatError() {
+    std::cerr << "Invalid format. " << suggestFormat << std::endl;
+}
 
 void ui::fileTouchError(const std::string &filename) {
     std::cerr << "Unable to touch \"" << filename << "\"." << std::endl;
