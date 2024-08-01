@@ -165,29 +165,29 @@ void ui::showList(const std::vector<entry> &entries) {
                   << std::endl;
 }
 
-void ui::showFormat(std::string format) {
+void ui::showFormat(const std::string &format) {
     std::cout << "Global hash format: " << format << std::endl;
 }
 
-void ui::newFormat(bool outcome, std::string newFormat) {
+void ui::newFormat(bool outcome, const std::string &newFormat) {
     if (outcome)
         std::cout << "New global hash format set: " << newFormat << std::endl;
     else
         std::cerr << "Unable to set new global hash format." << std::endl;
 }
 
-void ui::showToken(std::string token) {
+void ui::showToken(const std::string &token) {
     std::cout << "Global private token: " << token << std::endl;
 }
 
-void ui::newToken(bool outcome, std::string newToken) {
+void ui::newToken(bool outcome, const std::string &newToken) {
     if (outcome)
         std::cout << "New global private token set: " << newToken << std::endl;
     else
         std::cerr << "Unable to set new global private token." << std::endl;
 }
 
-bool ui::showGeneratedToken(std::string token) {
+bool ui::showGeneratedToken(const std::string &token) {
     std::cout << "Generated token: " << token << std::endl;
     std::string choice;
     const std::string question =
@@ -292,8 +292,8 @@ void ui::hashNotCopiedToClipboard() {
 }
 
 char getHiddenChar() {
-    struct termios oldT {
-    }, newT{};
+    struct termios oldT {};
+    struct termios newT {};
     char ch;
     tcgetattr(STDIN_FILENO, &oldT);
     newT = oldT;

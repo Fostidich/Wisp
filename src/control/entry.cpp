@@ -28,13 +28,13 @@ bool isDateValid(struct date date) {
     return true;
 }
 
-entry::entry(std::string provider, std::string username) {
+entry::entry(const std::string &provider, const std::string &username) {
     this->provider = provider;
     this->username = username;
     date = today();
 }
 
-entry::entry(nlohmann::basic_json<> entry) {
+entry::entry(const nlohmann::basic_json<> &entry) {
     try {
         if (entry.contains("provider") && entry["provider"].is_string())
             provider = entry["provider"];
@@ -95,7 +95,7 @@ const struct date &entry::getDate() const {
     return date;
 }
 
-void entry::setFormat(const std::string newFormat) {
+void entry::setFormat(const std::string &newFormat) {
     format = newFormat;
 }
 
@@ -104,7 +104,7 @@ void entry::setUpdate(int newUpdate) {
     date = today();
 }
 
-void entry::setAnnotation(const std::string newAnnotation) {
+void entry::setAnnotation(const std::string &newAnnotation) {
     annotation = newAnnotation;
 }
 

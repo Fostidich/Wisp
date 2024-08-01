@@ -17,7 +17,7 @@ std::string commands::getFormat() {
     } catch (const std::exception &_) { return ""; }
 }
 
-bool commands::setFormat(std::string newFormat) {
+bool commands::setFormat(const std::string &newFormat) {
     try {
         std::string path = getExecutableDir();
         if (path.empty()) return false;
@@ -45,7 +45,7 @@ std::string commands::getToken() {
     } catch (const std::exception &_) { return ""; }
 }
 
-bool commands::setToken(std::string newToken) {
+bool commands::setToken(const std::string &newToken) {
     try {
         std::string path = getExecutableDir();
         if (path.empty()) return false;

@@ -7,7 +7,7 @@
 #include <vector>
 
 namespace ui {
-void fileTouchError(const std::string &filename);
+void fileTouchError(const std::string& filename);
 void configsError();
 void noArgumentError();
 void unknownCommandError(const std::string& command);
@@ -25,13 +25,13 @@ void versionText(const std::string& version);
 void randomKey(const std::string& key);
 bool askConfirmation();
 void destroyOutcome(bool outcome);
-void showList(const std::vector<entry> &entries);
+void showList(const std::vector<entry>& entries);
 
-void showFormat(std::string format);
-void newFormat(bool outcome, std::string newFormat);
-void showToken(std::string token);
-void newToken(bool outcome, std::string newToken);
-bool showGeneratedToken(std::string token);
+void showFormat(const std::string& format);
+void newFormat(bool outcome, const std::string& newFormat);
+void showToken(const std::string& token);
+void newToken(bool outcome, const std::string& newToken);
+bool showGeneratedToken(const std::string& token);
 void newTokenAbort();
 
 void entryUpdated();
@@ -46,7 +46,7 @@ void entryNotFound();
 bool askForAddition();
 std::string inputKey();
 
-void hashGeneration(const std::string & hash);
+void hashGeneration(const std::string& hash);
 void hashCopiedToClipboard();
 void hashNotCopiedToClipboard();
 }

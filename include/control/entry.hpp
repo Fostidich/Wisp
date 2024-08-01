@@ -17,9 +17,9 @@ bool isDateValid(struct date date);
 class entry {
   public:
     /// Entry is initialized with today's date
-    entry(std::string provider, std::string username);
+    entry(const std::string &provider, const std::string &username);
     /// Entry is initialized with today's date
-    entry(nlohmann::basic_json<> entry);
+    entry(const nlohmann::basic_json<> &entry);
     /// Entry is initialized with today's date
     entry(const std::map<enum flag, std::string> &flags);
 
@@ -30,10 +30,10 @@ class entry {
     const std::string &getAnnotation() const;
     const struct date &getDate() const;
 
-    void setFormat(const std::string newFormat);
+    void setFormat(const std::string &newFormat);
     /// Setting a new update will also update the date with today's date
     void setUpdate(int newUpdate);
-    void setAnnotation(const std::string newAnnotation);
+    void setAnnotation(const std::string &newAnnotation);
 
     std::string toString(
         int providerMaxLen, int usernameMaxLen, int updateMaxLen) const;

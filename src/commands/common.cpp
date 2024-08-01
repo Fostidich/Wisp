@@ -23,7 +23,7 @@ std::string getExecutablePath() {
     return "";
 }
 
-bool touchFile(std::string folder, std::string filename) {
+bool touchFile(const std::string &folder, const std::string &filename) {
     std::string path = getExecutableDir();
     if (path.empty()) return false;
 
