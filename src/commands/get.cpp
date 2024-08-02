@@ -10,7 +10,7 @@ void commands::populateEntry(entry &initial) {
     auto entries = commands::retrieveEntries();
 
     std::string f;
-    int n;
+    int n = 0;
     for (const auto &e : entries) {
         if (e.getProvider().compare(initial.getProvider()) ||
             e.getUsername().compare(initial.getUsername()))
