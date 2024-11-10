@@ -1,7 +1,7 @@
 #include "commands/commands.hpp"
 
 #include <exception>
-#include <mINI/ini.h>
+#include <mini/ini.h>
 
 std::string commands::getFormat() {
     try {
