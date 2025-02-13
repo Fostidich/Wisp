@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <termios.h>
+#include <unistd.h>
 
 const std::string suggestHelp = "Use \"wisp --help\" for a list of commands.";
 const std::string suggestFormat = "Use \"wisp --format\" for format rules.";

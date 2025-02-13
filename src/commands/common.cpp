@@ -3,15 +3,24 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <random>
+#include <string>
 
-std::string getExecutableDir() {
-    std::string executablePath = getExecutablePath();
-    size_t lastSlash = executablePath.find_last_of('/');
-    std::string executableDir = (lastSlash != std::string::npos)
-                                    ? executablePath.substr(0, lastSlash + 1)
-                                    : "";
-    return executableDir;
+#ifdef __APPLE__
+#include <mach-o/dyld.h>
+#include <limits.h>
+
+std::string getExecutablePath() {
+    char buffer[PATH_MAX];
+    uint32_t size = sizeof(buffer);
+    if (_NSGetExecutablePath(buffer, &size) == 0) {
+        return buffer;
+    }
+    return "";
 }
+
+#elif defined(__linux__)
+#include <unistd.h>
+#include <limits.h>
 
 std::string getExecutablePath() {
     char buffer[PATH_MAX];
@@ -21,6 +30,19 @@ std::string getExecutablePath() {
         return buffer;
     }
     return "";
+}
+
+#else
+#error "Unsupported OS"
+#endif
+
+std::string getExecutableDir() {
+    std::string executablePath = getExecutablePath();
+    size_t lastSlash = executablePath.find_last_of('/');
+    std::string executableDir = (lastSlash != std::string::npos)
+                                    ? executablePath.substr(0, lastSlash + 1)
+                                    : "";
+    return executableDir;
 }
 
 bool touchFile(const std::string &folder, const std::string &filename) {

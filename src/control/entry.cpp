@@ -2,7 +2,14 @@
 
 #include <exception>
 #include <format>
+#include <iostream>
 #include <sys/ioctl.h>
+#include <unistd.h>
+
+int getTerminalWidth() {
+    struct winsize w;
+    return ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0 ? w.ws_col : 100;
+}
 
 struct date today() {
     auto now = std::chrono::system_clock::now();
@@ -118,7 +125,7 @@ std::string entry::toString(
 
     std::string s;
     struct winsize w;
-    int width = ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == 0 ? w.ws_col : 100;
+    int width = getTerminalWidth();
     width += purple.size() + yellow.size() + cyan.size() - 3;
 
     s += "[" + std::format("{:0{}}", date.year, 4) + '-' +

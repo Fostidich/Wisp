@@ -5,3 +5,4 @@ build
 .cache
 .idea
 *.mdj
+**/.DS_Store

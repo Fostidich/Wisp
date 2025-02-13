@@ -2,6 +2,7 @@
 
 #include <openssl/sha.h>
 #include <string>
+#include <cstdlib>
 
 const std::vector<char> symbols = {'!', '"', '$', '%', '&', '/', '(', ')', '=',
     '?', '^', '*', '+', '[', ']', '@', '#', '_', ';', ':', ',', '.'};
@@ -31,13 +32,13 @@ void commands::populateEntry(entry &initial) {
 }
 
 bool commands::copyToClipboard(const std::string &text) {
-    if (!system("which xclip > /dev/null 2>&1") &&
-        !system(
-            ("echo " + text + " | xclip -selection clipboard > /dev/null 2>&1")
-                .c_str()))
-        return true;
-    else
-        return false;
+    #if defined(__APPLE__)  // macOS
+        return system(("echo \"" + text + "\" | pbcopy").c_str()) == 0;
+    #elif defined(__linux__)  // Linux
+        return system(("echo \"" + text + "\" | xclip -selection clipboard > /dev/null 2>&1").c_str()) == 0;
+    #else
+        return false;  // Unsupported OS
+    #endif
 }
 
 std::string commands::generateHash(const entry &seed, const std::string &key) {
