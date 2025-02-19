@@ -35,7 +35,7 @@ bool commands::copyToClipboard(const std::string &text) {
     #if defined(__APPLE__)  // macOS
         return system(("echo \"" + text + "\" | pbcopy").c_str()) == 0;
     #elif defined(__linux__)  // Linux
-        return system(("echo \"" + text + "\" | xclip -selection clipboard > /dev/null 2>&1").c_str()) == 0;
+        return system(("echo \"" + text + "\" | xclip -selection clipboard").c_str()) == 0;
     #else
         return false;  // Unsupported OS
     #endif
