@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 4.00)
 
 project(wisp)
 
@@ -38,7 +38,7 @@ include(FetchContent)
 FetchContent_Declare(
     nlohmann_json
     GIT_REPOSITORY  https://github.com/nlohmann/json.git
-    GIT_TAG         v3.11.2
+    GIT_TAG         v3.11.3
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
